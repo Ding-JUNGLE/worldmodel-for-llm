@@ -42,11 +42,34 @@ Approved road-sign memory selected seed 8.
 
 ## Quick Start for Teammates
 
-1. Read `docs/01_environment_setup_foolproof.md`
-2. Download checkpoints using `docs/02_checkpoint_download_and_layout.md`
-3. Run smoke tests using `docs/03_run_smoke_tests.md`
-4. Run memory experiments using `docs/04_run_memory_experiments.md`
-5. Read memory code changes in `docs/05_memory_module_where_we_changed.md`
+1. Read `docs/00_FOR_TEAMMATES_READ_THIS_FIRST.md`
+2. Set up in `docs/01_TEAMMATE_SETUP_GUIDE.md`
+3. Read `docs/04_run_memory_experiments.md`
+4. Read memory module details in `docs/02_MEMORY_MODULE_LOCATION.md`
+5. Run smoke and memory commands via `docs/03_REPRODUCTION_COMMANDS.md`
+
+## For Group Members
+
+Start here:
+
+`docs/00_FOR_TEAMMATES_READ_THIS_FIRST.md`
+
+Most important setup guide:
+
+`docs/01_TEAMMATE_SETUP_GUIDE.md`
+
+Where the memory module is added:
+
+`docs/02_MEMORY_MODULE_LOCATION.md`
+
+Main reproduction command:
+
+```bash
+bash scripts/run/reproduce_gta_roadsign_memory.sh \
+  --matrix-game2-root /path/to/Matrix-Game-2 \
+  --output-root /path/to/repro_outputs \
+  --mode smoke
+```
 
 ## What Is Not Included
 
