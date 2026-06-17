@@ -14,11 +14,11 @@ final-assignment-demo-v2-expanded-evidence-20260617
 
 ## Commit
 
-TBD
+7297fe1
 
 ## Pushed
 
-TBD
+Yes
 
 ## Candidate pool
 
