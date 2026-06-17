@@ -1,0 +1,64 @@
+{
+  "status": "HUMAN_APPROVED",
+  "source": "gta_first_visit",
+  "approval_note": "Approved road-sign landmark boxes focusing on the right-side sign before passing.",
+  "instructions": "Use these road-sign boxes as the approved manual landmark spec for reranking.",
+  "landmarks": [
+    {
+      "landmark_id": "gta_roadsign_001",
+      "tag": "road_sign_landmark",
+      "frame_index": 3,
+      "frame_path": "outputs/runs/20260617_009_gta_roadsign_approved_memory_v3/annotation/first_visit_frames/frame_0003.png",
+      "bbox_xyxy": [
+        472,
+        20,
+        639,
+        204
+      ],
+      "proposal_method": "human_approved_road_sign_box",
+      "human_note": "Approved road-side sign landmark, visible on the right before passing."
+    },
+    {
+      "landmark_id": "gta_roadsign_002",
+      "tag": "road_sign_landmark",
+      "frame_index": 4,
+      "frame_path": "outputs/runs/20260617_009_gta_roadsign_approved_memory_v3/annotation/first_visit_frames/frame_0004.png",
+      "bbox_xyxy": [
+        492,
+        22,
+        639,
+        204
+      ],
+      "proposal_method": "human_approved_road_sign_box",
+      "human_note": "Approved road-side sign landmark, right edge billboard/sign cluster."
+    },
+    {
+      "landmark_id": "gta_roadsign_003",
+      "tag": "road_sign_landmark",
+      "frame_index": 5,
+      "frame_path": "outputs/runs/20260617_009_gta_roadsign_approved_memory_v3/annotation/first_visit_frames/frame_0005.png",
+      "bbox_xyxy": [
+        452,
+        22,
+        639,
+        204
+      ],
+      "proposal_method": "human_approved_road_sign_box",
+      "human_note": "Approved road-side sign landmark, sign becomes larger as the car approaches."
+    },
+    {
+      "landmark_id": "gta_roadsign_004",
+      "tag": "road_sign_landmark",
+      "frame_index": 6,
+      "frame_path": "outputs/runs/20260617_009_gta_roadsign_approved_memory_v3/annotation/first_visit_frames/frame_0006.png",
+      "bbox_xyxy": [
+        430,
+        22,
+        639,
+        204
+      ],
+      "proposal_method": "human_approved_road_sign_box",
+      "human_note": "Approved road-side sign landmark, still on the right side before passing."
+    }
+  ]
+}

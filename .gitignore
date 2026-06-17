@@ -1,0 +1,35 @@
+# model weights / checkpoints
+*.safetensors
+*.pth
+*.pt
+*.ckpt
+*.bin
+checkpoints/
+base_distilled_model/
+gta_distilled_model/
+templerun_distilled_model/
+xlm-roberta-large/
+Wan2.1_VAE.pth
+models_clip_open-clip-xlm-roberta-large-vit-huge-14.pth
+
+# generated videos / heavy outputs
+*.mp4
+*.avi
+*.mov
+*.webm
+outputs/
+runs/*/artifacts/
+logs/
+*.log
+
+# cache
+__pycache__/
+*.pyc
+.cache/
+.ipynb_checkpoints/
+
+# env / secrets
+.env
+.venv/
+*.key
+id_rsa*
