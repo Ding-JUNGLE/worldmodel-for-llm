@@ -1,6 +1,5 @@
 # Figures
 
-Small contact sheets are included when their size is reasonable.
+This folder may contain selected lightweight contact sheets.
 
-- `roadsign_contact_sheet.png`
-- `gta_landmark_contact_sheet.png`
+Large videos are not included in this GitHub repo.

@@ -1,4 +1,4 @@
-# model weights / checkpoints
+# checkpoints / model weights
 *.safetensors
 *.pth
 *.pt

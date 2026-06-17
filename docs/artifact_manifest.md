@@ -10,7 +10,6 @@
 - limitations
 - small result CSV / JSON
 - selected contact-sheet PNGs if small enough
-- contact-sheet PNGs: roadsign=included, landmark=included
 
 ## Excluded
 

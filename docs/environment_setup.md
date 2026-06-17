@@ -12,10 +12,10 @@ Original project location on workstation:
 
 ## Hardware Used
 
-* Linux workstation
-* NVIDIA GPU
-* Existing Matrix-Game-2 environment
-* GTA and TempleRun distilled checkpoints installed locally
+- Linux workstation
+- NVIDIA GPU
+- Existing Matrix-Game-2 environment
+- GTA and TempleRun distilled checkpoints installed locally
 
 ## Important Dependency Note
 

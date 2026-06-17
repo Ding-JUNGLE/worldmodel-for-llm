@@ -1,0 +1,11 @@
+matrix_game2_root: "/path/to/Matrix-Game/Matrix-Game-2"
+memory_project_root: "/path/to/worldmodel-for-llm"
+outputs_root: "/path/to/Matrix-Game-2/outputs/runs"
+
+checkpoints:
+  vae: "Wan2.1_VAE.pth"
+  clip: "models_clip_open-clip-xlm-roberta-large-vit-huge-14.pth"
+  gta: "gta_distilled_model/gta_keyboard2dim.safetensors"
+  gta_config: "gta_distilled_model/config.json"
+  templerun: "templerun_distilled_model/templerun_7dim_onlykey.safetensors"
+  templerun_config: "templerun_distilled_model/config.json"

@@ -30,15 +30,3 @@ rerank candidates using memory score
     ↓
 select final candidate
 ```
-
-## Recommended Run Naming
-
-```text
-outputs/runs/YYYYMMDD_NNN_short_name/
-```
-
-Example:
-
-```text
-outputs/runs/20260617_009_gta_roadsign_approved_memory_v3/
-```
