@@ -1,88 +1,67 @@
 # World Model External Memory Project
 
-## Stronger Final Evidence Package
-
-Use branch:
+## Use this branch
 
 ```text
 final-assignment-demo-v2-expanded-evidence-20260617
 ```
 
-This branch is the current final package for AP0006 report / PPT work.
+## Start here
 
-## Start here for teammates
-
-Read this file first:
-
-```text
-docs/final/TEAMMATE_FILE_DATA_GUIDE.md
-```
-
-It explains what every important file contains, what the data means, and how to use each file in the final report or PPT.
-
-## Recommended demo video
+1. Watch:
 
 ```text
 media/demo_v2/demo_v2_no_memory_vs_memory_annotated.mp4
 ```
 
-This compares:
+2. Read:
 
 ```text
-No memory: seed1
-Approved road-sign memory: seed8
+docs/final/TEAMMATE_FILE_DATA_GUIDE.md
 ```
 
-## Main evidence docs
+3. Main report:
+
+```text
+docs/final/final_assignment_memory_results_v2_expanded.md
+```
+
+4. Assignment mapping:
 
 ```text
 docs/final/assignment_requirement_mapping_v2.md
-docs/final/final_assignment_memory_results_v2_expanded.md
-docs/story/evidence_ladder_v2.md
-docs/final/demo_v2_report.md
-docs/story/experiment_story_and_direction.md
-docs/story/limitations_and_next_experiments.md
 ```
 
-## Expanded result tables
+5. Result tables:
 
 ```text
 results/final/expanded_memory_strategy_scores.csv
 results/final/all_candidate_scores_by_strategy.csv
 results/evaluation/random_memory_trials.csv
 results/evaluation/automatic_proxy_metrics.csv
-results/evaluation/manual_review_table_template.csv
 ```
 
-## Figures and visual evidence
+6. Figures:
 
 ```text
 figures/demo_v2/demo_v2_contact_sheet.png
-figures/demo_v2/manual_review_contact_sheet.png
 figures/final/roadsign_memory_target.png
 figures/final/memory_pipeline_diagram.md
-figures/final/final_ablation_summary.md
 ```
 
-## Presentation drafts
+## Main claim
 
-```text
-docs/presentation/presentation_outline_for_teammates.md
-docs/presentation/slide_content_draft.md
-docs/presentation/speaker_notes_draft.md
-```
+Matrix-Game-2 is frozen.
+Memory is external.
+No-memory selects seed1.
+Approved road-sign memory selects seed8.
+External object-level memory changes the final selected generation output.
 
-## Main assignment claim
+## Safe limitation
 
-We use Matrix-Game-2 as a frozen world model and add an external inference-time memory module.
-
-The memory stores first-visit keyframes and approved road-sign crops, retrieves them later, and reranks candidate continuations.
-
-This shows that external object-level memory can change the final selected generation output.
-
-## Limit
-
-This is a case-study and control-based result, not a universal proof that spatial forgetting is solved.
+This is case-study and control-based evidence.
+It is not a universal proof that spatial forgetting is solved.
+It is external candidate reranking, not internal Matrix-Game-2 memory injection.
 
 ## Overview
 
