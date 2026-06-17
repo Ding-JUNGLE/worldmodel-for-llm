@@ -132,7 +132,7 @@ run_inference() {
   local log_path="$6"
   mkdir -p "$output_dir"
   run_cmd "$log_path" \
-    python "$MG_ROOT/inference.py" \
+    python3 "$MG_ROOT/inference.py" \
     --config_path "$config" \
     --checkpoint_path "$ckpt" \
     --img_path "$img" \
@@ -205,12 +205,12 @@ if [[ ! -f "$GTA_CONFIG" || ! -f "$GTA_CHECKPOINT" || ! -f "$GTA_IMAGE" ]]; then
 fi
 
 echo "=== Gate 0: environment check ==="
-if ! python "$PROJECT_ROOT/scripts/setup/check_environment.py" > "$RUN_ROOT/check_environment.log" 2>&1; then
+if ! python3 "$PROJECT_ROOT/scripts/setup/check_environment.py" > "$RUN_ROOT/check_environment.log" 2>&1; then
   fail "FAIL_ENVIRONMENT"
 fi
 
 echo "=== Gate 1: checkpoint check ==="
-if ! python "$PROJECT_ROOT/scripts/setup/check_checkpoints.py" --matrix_game2_root "$MG_ROOT" > "$RUN_ROOT/check_checkpoints.log" 2>&1; then
+if ! python3 "$PROJECT_ROOT/scripts/setup/check_checkpoints.py" --matrix_game2_root "$MG_ROOT" > "$RUN_ROOT/check_checkpoints.log" 2>&1; then
   fail "FAIL_CHECKPOINTS"
 fi
 
@@ -237,7 +237,7 @@ MEMORY_DIR="$RUN_ROOT/memory"
 CANDIDATE_DIR="$RUN_ROOT/candidates"
 mkdir -p "$KEYFRAME_DIR" "$MEMORY_DIR" "$CANDIDATE_DIR"
 if ! run_cmd "$RUN_ROOT/keyframe_extract.log" \
-  python "$PROJECT_ROOT/scripts/external_memory/extract_keyframes.py" \
+  python3 "$PROJECT_ROOT/scripts/external_memory/extract_keyframes.py" \
   --video "$FIRST_VISIT_VIDEO" \
   --out_dir "$KEYFRAME_DIR" \
   --mode uniform \
@@ -272,7 +272,7 @@ mkdir -p "$ROADSIGN_CROP_DIR"
 USE_AUTO_ONLY=1
 
 if [[ -f "$ROADSIGN_ANNOTATION" ]]; then
-  if python - "$ROADSIGN_ANNOTATION" "$KEYFRAME_DIR" "$ROADSIGN_CROP_DIR" "$PROJECT_ROOT" > "$RUN_ROOT/annotation_status.txt" <<'PY'
+  if python3 - "$ROADSIGN_ANNOTATION" "$KEYFRAME_DIR" "$ROADSIGN_CROP_DIR" "$PROJECT_ROOT" > "$RUN_ROOT/annotation_status.txt" <<'PY'
 import json
 import sys
 from pathlib import Path
@@ -327,7 +327,7 @@ else
   MEMORY_SOURCE="$KEYFRAME_DIR"
 fi
 
-if ! python "$PROJECT_ROOT/scripts/external_memory/build_landmark_memory.py" \
+if ! python3 "$PROJECT_ROOT/scripts/external_memory/build_landmark_memory.py" \
   --keyframes_dir "$MEMORY_SOURCE" \
   --features_dir "$MEMORY_DIR/features" \
   --out_jsonl "$MEMORY_DIR/memory_bank.jsonl" \
@@ -340,7 +340,7 @@ QUERY_FRAME="$(find "$KEYFRAME_DIR" -maxdepth 1 -type f -name 'keyframe_*.png' -
 assert_file "$QUERY_FRAME" "FAIL_REPRO_SCRIPT"
 
 echo "=== Gate 5: rerank candidates ==="
-if ! python "$PROJECT_ROOT/scripts/external_memory/retrieve_memory.py" \
+if ! python3 "$PROJECT_ROOT/scripts/external_memory/retrieve_memory.py" \
   --query_frame "$QUERY_FRAME" \
   --memory_bank "$MEMORY_DIR/memory_bank.jsonl" \
   --top_k 6 \
@@ -349,7 +349,7 @@ if ! python "$PROJECT_ROOT/scripts/external_memory/retrieve_memory.py" \
   fail "FAIL_REPRO_SCRIPT"
 fi
 
-if ! python "$PROJECT_ROOT/scripts/external_memory/rerank_candidates.py" \
+if ! python3 "$PROJECT_ROOT/scripts/external_memory/rerank_candidates.py" \
   --candidates_dir "$CANDIDATE_DIR" \
   --memory_bank "$MEMORY_DIR/memory_bank.jsonl" \
   --retrieved_csv "$RUN_ROOT/retrieved_memory.csv" \
@@ -359,7 +359,7 @@ if ! python "$PROJECT_ROOT/scripts/external_memory/rerank_candidates.py" \
   fail "FAIL_RERANK"
 fi
 
-if ! python - "$RUN_ROOT/rerank_scores.csv" "$RUN_ROOT/selected_videos.json" <<'PY'
+if ! python3 - "$RUN_ROOT/rerank_scores.csv" "$RUN_ROOT/selected_videos.json" <<'PY'
 import csv
 import json
 from pathlib import Path
@@ -390,7 +390,7 @@ then
   fail "FAIL_REPRO_SCRIPT"
 fi
 
-if ! python "$PROJECT_ROOT/scripts/external_memory/evaluate_contact_sheet.py" \
+if ! python3 "$PROJECT_ROOT/scripts/external_memory/evaluate_contact_sheet.py" \
   --first_visit_frame "$QUERY_FRAME" \
   --selected_videos_json "$RUN_ROOT/selected_videos.json" \
   --out_png "$RUN_ROOT/contact_sheet.png" \
