@@ -2,53 +2,44 @@
 
 ## Diagnosis
 
-- PASS_ONLY_FINAL_BRANCH_REMAINS
+PASS_ONLY_FINAL_BRANCH_REMAINS
 
 ## Final branch kept
 
-- `final-assignment-demo-v2-expanded-evidence-20260617`
+final-assignment-demo-v2-expanded-evidence-20260617
 
 ## Default branch status
 
-- Switched to `final-assignment-demo-v2-expanded-evidence-20260617` with GitHub CLI.
+Confirmed as `final-assignment-demo-v2-expanded-evidence-20260617` via `gh repo view`.
 
 ## Deleted remote branches
 
-- `final-assignment-demo-video-and-story-20260617`
-- `final-assignment-results-upload-20260617`
-- `fix-omegaconf-clean-clone-repro-20260617`
-- `matrix-game2-external-memory-docs-20260617`
-- `repro-tutorial-memory-guide-20260617`
-- `teammate-experiment-tutorial-20260617`
-- `teammate-setup-memory-location-docs-20260617`
+None (remote already reduced to final branch only).
 
 ## Remaining remote branches
 
-- `final-assignment-demo-v2-expanded-evidence-20260617`
+- final-assignment-demo-v2-expanded-evidence-20260617
 
 ## README status
 
-- Centralized around the final branch, demo video, teammate guide, main report, assignment mapping, result tables, and main figures.
+`README.md` now has the required central entry section and links, and does not include the rejected phrase "No generated videos".
 
 ## START_HERE status
 
-- Centralized around the same final branch and points teammates to the final guide and final AP0006 evidence files first.
+`START_HERE.md` exists on the final branch, points to the same final branch and links key files.
 
 ## Teammate guide
 
-- `docs/final/TEAMMATE_FILE_DATA_GUIDE.md`
+`docs/final/TEAMMATE_FILE_DATA_GUIDE.md` is present and documents key file usage for the final package.
 
 ## Safety scan
 
-- Repo size: about `13M`
-- No files over `50MB`
-- No checkpoint files found
-- `.mp4` files remain only under `media/demo/` and `media/demo_v2/`
-- No private credentials found; grep hits were only scan-pattern text and binary-file notices
+- `du -sh .`: `13M`
+- Files over 50MB: none
+- Checkpoint/media artifacts (`*.safetensors`, `*.pth`, `*.pt`, `*.avi`, `*.mov`, `*.webm`): none
+- `.mp4` files only under `media/demo` or `media/demo_v2`
+- Private credential patterns (`PRIVATE KEY`, `BEGIN OPENSSH`, `hf_`, `ghp_`, `sk-`, `SHA256:`): no validated text credentials found
 
 ## Final instruction to teammates
 
-- Use branch `final-assignment-demo-v2-expanded-evidence-20260617`
-- Start from `README.md`
-- Watch `media/demo_v2/demo_v2_no_memory_vs_memory_annotated.mp4`
-- Read `docs/final/TEAMMATE_FILE_DATA_GUIDE.md`
+Use only `final-assignment-demo-v2-expanded-evidence-20260617` as the working branch and start from `README.md`.
