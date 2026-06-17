@@ -1,5 +1,46 @@
 # World Model External Memory Project
 
+## Stronger Final Evidence Package
+
+Use branch:
+
+```text
+final-assignment-demo-v2-expanded-evidence-20260617
+```
+
+Recommended presentation video:
+
+```text
+media/demo_v2/demo_v2_no_memory_vs_memory_annotated.mp4
+```
+
+Main evidence docs:
+
+```text
+docs/final/assignment_requirement_mapping_v2.md
+docs/final/final_assignment_memory_results_v2_expanded.md
+docs/story/evidence_ladder_v2.md
+docs/final/demo_v2_report.md
+```
+
+Expanded results:
+
+```text
+results/final/expanded_memory_strategy_scores.csv
+results/final/all_candidate_scores_by_strategy.csv
+results/evaluation/random_memory_trials.csv
+results/evaluation/automatic_proxy_metrics.csv
+results/evaluation/manual_review_table_template.csv
+```
+
+Claim:
+
+External object-level memory changes final candidate selection in a frozen Matrix-Game-2 world model.
+
+Limit:
+
+This is a case-study and control-based result, not a universal proof that spatial forgetting is solved.
+
 ## Final Assignment Package
 
 Use branch:

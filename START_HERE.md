@@ -1,5 +1,35 @@
 # Final Assignment Start Here
 
+# For final PPT
+
+Use the strongest branch:
+
+```text
+final-assignment-demo-v2-expanded-evidence-20260617
+```
+
+Watch first:
+
+```text
+media/demo_v2/demo_v2_no_memory_vs_memory_annotated.mp4
+```
+
+Read next:
+
+```text
+docs/final/assignment_requirement_mapping_v2.md
+docs/story/evidence_ladder_v2.md
+docs/final/final_assignment_memory_results_v2_expanded.md
+```
+
+Use tables:
+
+```text
+results/final/expanded_memory_strategy_scores.csv
+results/evaluation/random_memory_trials.csv
+results/evaluation/automatic_proxy_metrics.csv
+```
+
 For PPT and report, read in this order:
 
 ```text
@@ -21,6 +51,7 @@ Use result table:
 ```text
 results/final/final_memory_ablation_table.csv
 ```
+
 
 Use figures:
 

@@ -1,0 +1,9 @@
+candidate_seed,memory_similarity_score,approved_roadsign_similarity,rank,selected,selected_seed_margin,notes
+1,0.792035,0.798374,2,0,,proxy_metric_only
+2,0.790165,0.812274,3,0,,proxy_metric_only
+3,0.776860,0.809857,4,0,,proxy_metric_only
+4,0.768160,0.809102,6,0,,proxy_metric_only
+5,0.764382,0.782668,7,0,,proxy_metric_only
+6,0.768566,0.802418,5,0,,proxy_metric_only
+7,0.758504,0.797967,8,0,,proxy_metric_only
+8,0.799019,0.820002,1,1,0.006984,selected_seed
