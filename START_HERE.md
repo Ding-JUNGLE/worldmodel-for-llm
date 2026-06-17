@@ -1,6 +1,4 @@
-# Final Assignment Start Here
-
-# For final PPT
+# Start Here — Final Assignment Package
 
 Use the strongest branch:
 
@@ -8,87 +6,53 @@ Use the strongest branch:
 final-assignment-demo-v2-expanded-evidence-20260617
 ```
 
-Watch first:
+## 1. Watch first
 
 ```text
 media/demo_v2/demo_v2_no_memory_vs_memory_annotated.mp4
 ```
 
-Read next:
+This is the main demo for PPT: no-memory baseline vs approved road-sign memory.
+
+## 2. Read first
+
+```text
+docs/final/TEAMMATE_FILE_DATA_GUIDE.md
+```
+
+This file explains what every important file contains, what the data means, and how teammates should use each file in the report or PPT.
+
+## 3. Core assignment documents
 
 ```text
 docs/final/assignment_requirement_mapping_v2.md
-docs/story/evidence_ladder_v2.md
 docs/final/final_assignment_memory_results_v2_expanded.md
+docs/story/evidence_ladder_v2.md
+docs/story/experiment_story_and_direction.md
+docs/story/limitations_and_next_experiments.md
 ```
 
-Use tables:
+## 4. Main result tables
 
 ```text
 results/final/expanded_memory_strategy_scores.csv
+results/final/all_candidate_scores_by_strategy.csv
 results/evaluation/random_memory_trials.csv
 results/evaluation/automatic_proxy_metrics.csv
+results/evaluation/manual_review_table_template.csv
 ```
 
-For PPT and report, read in this order:
+## 5. Main figures
 
 ```text
-docs/final/assignment_requirement_mapping.md
-docs/story/experiment_story_and_direction.md
-docs/story/evidence_ladder.md
-docs/final/final_assignment_memory_results_expanded.md
-docs/presentation/presentation_outline_for_teammates.md
+figures/demo_v2/demo_v2_contact_sheet.png
+figures/demo_v2/manual_review_contact_sheet.png
+figures/final/roadsign_memory_target.png
+figures/final/memory_pipeline_diagram.md
+figures/final/final_ablation_summary.md
 ```
 
-Watch demo:
-
-```text
-media/demo/no_memory_vs_roadsign_memory_side_by_side.mp4
-```
-
-Use result table:
-
-```text
-results/final/final_memory_ablation_table.csv
-```
-
-
-Use figures:
-
-```text
-figures/final/
-```
-
-## Start Here — Teammate Guide
-
-1. For teammates, read:
-
-```text
-docs/00_FOR_TEAMMATES_READ_THIS_FIRST.md
-```
-
-2. Then follow:
-
-```text
-docs/01_TEAMMATE_SETUP_GUIDE.md
-docs/02_MEMORY_MODULE_LOCATION.md
-docs/03_REPRODUCTION_COMMANDS.md
-docs/04_CHECKPOINT_DOWNLOAD_PAGE.md
-docs/05_KNOWN_LIMITATIONS_FOR_REPRO.md
-```
-
-3. Reproduction entry command:
-
-```bash
-bash scripts/run/reproduce_gta_roadsign_memory.sh \
-  --matrix-game2-root /path/to/Matrix-Game-2 \
-  --output-root /path/to/repro_outputs \
-  --mode smoke
-```
-
-## For PPT / presentation
-
-Read:
+## 6. Presentation drafts
 
 ```text
 docs/presentation/presentation_outline_for_teammates.md
@@ -96,14 +60,20 @@ docs/presentation/slide_content_draft.md
 docs/presentation/speaker_notes_draft.md
 ```
 
-Use figures from:
+## 7. Main claim
 
 ```text
-figures/final/
+Matrix-Game-2 is frozen.
+Memory is external.
+No-memory selects seed1.
+Approved road-sign memory selects seed8.
+External object-level memory changes the final selected generation output.
 ```
 
-Use result table from:
+## 8. Safe limitation
 
 ```text
-results/final/final_memory_ablation_table.csv
+This is case-study and control-based evidence.
+It is not a universal proof that spatial forgetting is solved.
+It is external candidate reranking, not internal Matrix-Game-2 memory injection.
 ```
