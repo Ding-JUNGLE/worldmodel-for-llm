@@ -24,3 +24,25 @@ bash scripts/run/reproduce_gta_roadsign_memory.sh \
   --output-root /path/to/repro_outputs \
   --mode smoke
 ```
+## For PPT / presentation
+
+Read:
+
+```text
+docs/presentation/presentation_outline_for_teammates.md
+docs/presentation/slide_content_draft.md
+docs/presentation/speaker_notes_draft.md
+```
+
+Use figures from:
+
+```text
+figures/final/
+```
+
+Use result table from:
+
+```text
+results/final/final_memory_ablation_table.csv
+```
+

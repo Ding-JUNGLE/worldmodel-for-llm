@@ -71,6 +71,62 @@ bash scripts/run/reproduce_gta_roadsign_memory.sh \
   --mode smoke
 ```
 
+## Where is the memory module added?
+
+The memory module is **not** added inside Matrix-Game-2.
+
+We do **not** modify:
+
+- Matrix-Game-2 DiT / transformer
+- attention layers
+- model checkpoints
+- training code
+- `inference.py` core generation logic
+
+Instead, we add memory **outside the frozen world model**, at the inference-control layer.
+
+The pipeline is:
+
+```text
+Matrix-Game-2 frozen world model
+        ↓
+generate first_visit video
+        ↓
+external Memory Writer stores keyframes / landmark crops / road-sign crops
+        ↓
+Matrix-Game-2 generates multiple candidate continuations with different seeds
+        ↓
+external Memory Retriever reads historical memory
+        ↓
+external Memory Reranker scores candidates
+        ↓
+selected candidate becomes the final output
+```
+
+
+## Final Assignment Results Package
+
+For teammates preparing the presentation/PPT, use:
+
+```text
+docs/final/final_assignment_memory_results.md
+docs/presentation/presentation_outline_for_teammates.md
+docs/presentation/slide_content_draft.md
+docs/presentation/speaker_notes_draft.md
+results/final/final_memory_ablation_table.csv
+figures/final/
+```
+
+Main result:
+
+```text
+No memory: seed1
+Approved road-sign memory: seed8
+
+```
+
+The videos are not uploaded to GitHub. Only lightweight figures, CSVs, JSON manifests, and Markdown reports are included.
+
 ## What Is Not Included
 
 - No model checkpoints

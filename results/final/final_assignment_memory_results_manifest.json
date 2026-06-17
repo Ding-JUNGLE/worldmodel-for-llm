@@ -1,0 +1,21 @@
+{
+  "package": "final_assignment_memory_results",
+  "created_at": "2026-06-17",
+  "source_runs": [
+    "/mnt/data1/dgw/external_repos/Matrix-Game/Matrix-Game-2/outputs/runs/20260617_007_gta_landmark_memory_v1",
+    "/mnt/data1/dgw/external_repos/Matrix-Game/Matrix-Game-2/outputs/runs/20260617_008_gta_manual_landmark_memory_v2",
+    "/mnt/data1/dgw/external_repos/Matrix-Game/Matrix-Game-2/outputs/runs/20260617_009_gta_roadsign_approved_memory_v3"
+  ],
+  "artifacts": [
+    "figures/memory_pipeline_diagram.md",
+    "figures/no_memory_vs_memory_contact_sheet.png",
+    "figures/roadsign_memory_target.png",
+    "figures/final_ablation_summary.md",
+    "report/final_assignment_memory_results.md",
+    "report/presentation_outline_for_teammates.md",
+    "report/slide_content_draft.md",
+    "report/speaker_notes_draft.md",
+    "results/final_memory_ablation_table.csv",
+    "results/final_memory_ablation_table.md"
+  ]
+}

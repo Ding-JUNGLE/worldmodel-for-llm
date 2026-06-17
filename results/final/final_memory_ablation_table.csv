@@ -1,0 +1,9 @@
+strategy,selected_seed,memory_score,note,source_file
+no_memory,1,,Baseline with no-memory rerank control,outputs/runs/20260617_007_gta_landmark_memory_v1/rerank/selection_summary.csv
+uniform_memory,1,0.941255,all 12 first_visit frames,outputs/runs/20260617_007_gta_landmark_memory_v1/rerank/selection_summary.csv
+auto_landmark_memory,6,0.836442,auto landmark crops,outputs/runs/20260617_007_gta_landmark_memory_v1/rerank/selection_summary.csv
+recent_only,7,0.899912,last 3 first_visit frames only,outputs/runs/20260617_007_gta_landmark_memory_v1/rerank/selection_summary.csv
+wrong_scene_memory,5,0.661841,wrong-scene negative control memory,outputs/runs/20260617_007_gta_landmark_memory_v1/rerank/selection_summary.csv
+manual_landmark_memory_v2,3,0.975133,PROVISIONAL manual landmark proxy,outputs/runs/20260617_008_gta_manual_landmark_memory_v2/rerank/manual_landmark_selection_summary.csv
+approved_roadsign_memory,8,0.799019,HUMAN_APPROVED road-sign boxes,outputs/runs/20260617_009_gta_roadsign_approved_memory_v3/rerank/roadsign_selection_summary.csv
+random_memory,1,0.926306,seed distribution {1:7,7:3},outputs/runs/20260617_007_gta_landmark_memory_v1/rerank/selection_summary.csv
