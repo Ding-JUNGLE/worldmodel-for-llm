@@ -1,4 +1,34 @@
-# Start Here — Teammate Guide
+# Final Assignment Start Here
+
+For PPT and report, read in this order:
+
+```text
+docs/final/assignment_requirement_mapping.md
+docs/story/experiment_story_and_direction.md
+docs/story/evidence_ladder.md
+docs/final/final_assignment_memory_results_expanded.md
+docs/presentation/presentation_outline_for_teammates.md
+```
+
+Watch demo:
+
+```text
+media/demo/no_memory_vs_roadsign_memory_side_by_side.mp4
+```
+
+Use result table:
+
+```text
+results/final/final_memory_ablation_table.csv
+```
+
+Use figures:
+
+```text
+figures/final/
+```
+
+## Start Here — Teammate Guide
 
 1. For teammates, read:
 
@@ -24,6 +54,7 @@ bash scripts/run/reproduce_gta_roadsign_memory.sh \
   --output-root /path/to/repro_outputs \
   --mode smoke
 ```
+
 ## For PPT / presentation
 
 Read:
@@ -45,4 +76,3 @@ Use result table from:
 ```text
 results/final/final_memory_ablation_table.csv
 ```
-

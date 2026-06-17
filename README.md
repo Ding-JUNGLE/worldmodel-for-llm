@@ -1,5 +1,49 @@
 # World Model External Memory Project
 
+## Final Assignment Package
+
+Use branch:
+
+```text
+final-assignment-demo-video-and-story-20260617
+```
+
+This branch contains the complete final assignment package:
+
+```text
+docs/final/assignment_requirement_mapping.md
+docs/final/final_assignment_memory_results_expanded.md
+docs/story/experiment_story_and_direction.md
+docs/story/evidence_ladder.md
+docs/story/limitations_and_next_experiments.md
+media/demo/no_memory_vs_roadsign_memory_side_by_side.mp4
+results/final/final_memory_ablation_table.csv
+figures/final/
+```
+
+## Demo video
+
+Recommended presentation demo:
+
+```text
+media/demo/no_memory_vs_roadsign_memory_side_by_side.mp4
+```
+
+This compares:
+
+```text
+No memory: seed1
+Approved road-sign memory: seed8
+```
+
+## Main assignment claim
+
+We use Matrix-Game-2 as a frozen world model and add an external inference-time memory module.
+
+The memory stores first-visit keyframes and approved road-sign crops, retrieves them later, and reranks candidate continuations.
+
+This shows that external object-level memory can change the final selected generation output.
+
 ## Overview
 
 This project studies inference-time memory mechanisms for world models.
@@ -125,7 +169,7 @@ Approved road-sign memory: seed8
 
 ```
 
-The videos are not uploaded to GitHub. Only lightweight figures, CSVs, JSON manifests, and Markdown reports are included.
+This repository also includes compressed demo videos under `media/demo/`.
 
 ## What Is Not Included
 
