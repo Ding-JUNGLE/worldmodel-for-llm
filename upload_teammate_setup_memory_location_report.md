@@ -10,11 +10,11 @@ teammate-setup-memory-location-docs-20260617
 
 ## Commit
 
-TBD
+e02fd8f
 
 ## Pushed
 
-TBD
+PENDING
 
 ## Docs created
 
@@ -27,9 +27,10 @@ TBD
 
 ## Safety scan
 
-- Large files check: pending
-- Credential scan: pending
+- No files over 50M found.
+- No `.safetensors/.pth/.pt/.mp4/.avi/.mov` files found in this repository checkout.
+- No credential-like strings found by grep (`PRIVATE KEY`, `BEGIN OPENSSH`, `hf_`, `ghp_`, `SHA256:`).
 
 ## Next step for teammates
 
-Follow `docs/00_FOR_TEAMMATES_READ_THIS_FIRST.md` and run `bash scripts/run/reproduce_gta_roadsign_memory.sh ... --mode smoke` after Matrix-Game-2 env + checkpoints checks pass.
+Follow `docs/00_FOR_TEAMMATES_READ_THIS_FIRST.md` and run smoke first using `scripts/run/reproduce_gta_roadsign_memory.sh` after environment/checkpoint checks.
