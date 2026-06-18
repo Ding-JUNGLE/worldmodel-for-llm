@@ -27,9 +27,10 @@ If you only have a few minutes, read or watch these first:
 1. `media/demo_v2/demo_v2_no_memory_vs_memory_annotated.mp4`
 2. `docs/final/assignment_requirement_mapping_v2.md`
 3. `docs/final/final_assignment_memory_results_v2_expanded.md`
-4. `docs/story/evidence_ladder_v2.md`
-5. `results/final/expanded_memory_strategy_scores.csv`
-6. `figures/demo_v2/demo_v2_contact_sheet.png`
+4. `docs/final/memory_card_and_cost_analysis.md`
+5. `docs/story/evidence_ladder_v2.md`
+6. `results/final/expanded_memory_strategy_scores.csv`
+7. `figures/demo_v2/demo_v2_contact_sheet.png`
 
 ---
 
@@ -234,6 +235,20 @@ How teammates should use it:
 
 - Use this to write the report introduction and assignment alignment section.
 - Use it to answer: “Are we actually following the assignment?”
+
+---
+
+## `docs/final/memory_card_and_cost_analysis.md`
+
+Purpose:
+
+- Memory card and cost analysis document for Stage B/C evidence packaging.
+- Includes memory type/unit, lifecycle, stored fields, code locations, cost summary, limits, and future upgrades.
+
+How teammates should use it:
+
+- Use this for cost-aware slides and technical appendices.
+- Use this to standardize what the package can and cannot claim about model influence.
 
 ---
 
@@ -1051,3 +1066,35 @@ We solved spatial forgetting.
 The model internally remembers the road sign.
 This result is statistically proven.
 ```
+
+## 13. Evidence strengthening notes
+
+### Memory Card and cost evidence
+
+- Primary package card file: `docs/final/memory_card_and_cost_analysis.md`
+- Use for Stage A/B/C explanation and appendix slides.
+- Includes: memory type/unit, write/read/update/use, stored fields, code locations, storage/runtime/GPU cost, and future upgrade notes.
+
+### Stage A/B/C alignment map
+
+| Stage | Where to read |
+|---|---|
+| Stage A | `docs/final/memory_card_and_cost_analysis.md` + `docs/final/final_assignment_memory_results_v2_expanded.md` |
+| Stage B | `figures/final/memory_pipeline_diagram.md`, `figures/final/no_memory_vs_memory_contact_sheet.png`, `media/demo_v2/demo_v2_no_memory_vs_memory_annotated.mp4` |
+| Stage C | `results/final/expanded_memory_strategy_scores.csv`, `results/final/all_candidate_scores_by_strategy.csv` |
+
+### Manual review: fillable now, completed later
+
+- File: `results/evaluation/manual_review_table_template.csv`
+- Safe workflow:
+  - template state: `review_type=template_only`
+  - completed state: `review_type=reviewed`
+  - fill only numeric judgments (`0/1/2`) plus brief evidence notes
+
+### Failure / weak evidence lines to keep in PPT notes
+
+- One road-sign case study.
+- Candidate pool limited to `seed1..8`.
+- Manual review is template-only unless rows are fully filled.
+- Random control currently `10` trials.
+- Therefore avoid universal memory performance wording.
