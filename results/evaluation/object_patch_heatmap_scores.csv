@@ -1,0 +1,5 @@
+candidate_seed,object_memory_score,best_frame_index,best_patch_index,max_patch_similarity,temporal_coverage_count
+8,0.740770,54,36,0.763863,8
+1,0.727386,54,37,0.751996,8
+3,0.719987,81,55,0.756055,8
+5,0.717236,54,39,0.749264,8

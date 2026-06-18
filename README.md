@@ -245,6 +245,32 @@ Important V3 readout:
 
 This remains **external reranking** and still **case-study evidence**, not internal memory injection or benchmark-level proof.
 
+## Fun Demo V3 Pack
+
+This package also adds presentation-facing demos that are visually clearer but still tied to memory-module analysis.
+
+### Demo V3 files
+
+```text
+media/demo_v3/candidate_gallery_memory_selection.mp4
+media/demo_v3/memory_strength_slider_demo.mp4
+media/demo_v3/correct_vs_wrong_memory_battle.mp4
+media/demo_v3/object_patch_heatmap_demo.mp4
+```
+
+### What each demo proves
+
+| Demo | Purpose |
+|---|---|
+| Candidate Gallery | shows candidate-pool comparison, not only two cherry-picked videos |
+| Memory Strength Slider | visualizes external memory influence as a reranking weight |
+| Correct vs Wrong Memory Battle | tests whether relevant memory matters more than distractor memory |
+| Object-Patch Heatmap | visualizes how object-level memory is read from candidate frames |
+
+### Important limitation
+
+These demos are external reranking / visualization demos. They do not mean Matrix-Game-2 internally learned memory.
+
 ## What this project is
 
 - Base model: `Matrix-Game-2` (external memory is an add-on)

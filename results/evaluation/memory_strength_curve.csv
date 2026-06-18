@@ -1,0 +1,6 @@
+lambda,selected_seed,selected_score,top3_seeds,notes
+0.0,1,1.000000,"1,2,3",quality_score unavailable; used seed-order baseline proxy 1-0.001*(seed-1)
+0.25,1,1.181847,"1,8,3",quality_score unavailable; used seed-order baseline proxy 1-0.001*(seed-1)
+0.5,1,1.363693,"1,8,3",quality_score unavailable; used seed-order baseline proxy 1-0.001*(seed-1)
+0.75,8,1.548577,"8,1,3",quality_score unavailable; used seed-order baseline proxy 1-0.001*(seed-1)
+1.0,8,1.733770,"8,1,3",quality_score unavailable; used seed-order baseline proxy 1-0.001*(seed-1)

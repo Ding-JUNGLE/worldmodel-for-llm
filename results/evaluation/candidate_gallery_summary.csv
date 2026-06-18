@@ -1,0 +1,9 @@
+seed,approved_roadsign_score,approved_roadsign_rank,object_patch_score,object_patch_rank,selected_by_no_memory,selected_by_approved_memory
+1,0.792035,2,0.727386,2,1,0
+2,0.790165,3,0.708073,7,0,0
+3,0.776860,4,0.719987,3,0,0
+4,0.768160,6,0.716683,5,0,0
+5,0.764382,7,0.717236,4,0,0
+6,0.768566,5,0.707632,8,0,0
+7,0.758504,8,0.714967,6,0,0
+8,0.799019,1,0.740770,1,0,1
