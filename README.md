@@ -4,6 +4,14 @@ Final package for AP0006 Final Project: **Memory Modules in World Models**.
 
 We use Matrix-Game-2 as a frozen world model and add an external inference-time memory module that stores first-visit visual evidence and reranks candidate continuations.
 
+## PPT-ready summary
+
+For the shortest presentation-ready version, read:
+
+```text
+docs/final/READY_FOR_PPT.md
+```
+
 一句话中文主线：
 我们冻结 Matrix-Game-2，不训练、不改模型内部结构；在推理阶段外接 memory module，保存 first-visit 的 keyframes / road-sign crops，并在后续多个 candidate videos 中根据 memory similarity 进行 reranking。最终 no-memory 选择 seed1，approved road-sign memory 选择 seed8。
 
