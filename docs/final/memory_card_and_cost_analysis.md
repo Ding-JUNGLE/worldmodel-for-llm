@@ -57,23 +57,39 @@
 - Candidate pool seed1..8: **~39 MB**
 - Rerank artifacts (csv/json/contact sheets): typically low-single-digit MB each
 
+### V3 measured cost table
+
+See `results/evaluation/memory_cost_analysis.csv`.
+
+Current V3 package highlights:
+
+- Approved roadsign memory bank JSONL: `2556` bytes
+- `1 crop` JSONL: `807` bytes
+- `2 crops` JSONL: `1614` bytes
+- Candidate video count used by object-patch reranker: `8`
+- Demo V3 video artifact: about `2.1 MB`
+
 ### Runtime
 
 - Matrix-Game-2 candidate generation is the dominant runtime component.
 - Candidate generation in reference logs is approximately **~20s per 16-step seed** (observational reference).
 - Memory feature loading, similarity scoring, and rerank are lightweight post-generation steps.
+- Observed V3 object-patch rerank runtime is about **14-16 s** for the `seed1..8` pool, depending on memory-bank size.
 
 ### GPU cost
 
 - External memory module uses lightweight torch/vision operations and CPU-side I/O for I/O-bound parts.
 - The largest GPU load remains the frozen Matrix-Game-2 generation path.
 - We do not assert model-internal memory-compute attribution for observed gains.
+- GPU-memory impact claim stays bounded: **no internal model parameter, KV-cache, or attention-layout change**.
 
 ## Limitation
 
 - **External reranking only**: this module does not inject memory into Matrix-Game-2 internal state.
 - Candidate pool is currently `seed1..8`.
 - Manual review table is currently template state.
+- Distractor controls in V3 show that patch-level matching is not yet fully object-specific; some non-road-sign crops can still select `seed8`.
+- `seed1..16` expansion is not available in the current environment.
 
 ## Future upgrade
 

@@ -1,0 +1,9 @@
+variant,num_memory_entries,selected_seed,selected_score,score_margin,runtime_seconds,notes
+bbox_jitter_5pct,4,8,0.755073,0.018018,14.693,auto-generated jitter from approved boxes
+bbox_jitter_10pct,4,8,0.767084,0.017241,14.534,auto-generated jitter from approved boxes
+all_approved_boxes,4,8,0.740770,0.013384,13.985,
+single_box_frame0003,1,1,0.710167,0.000358,13.773,
+leave_one_out_gta_roadsign_001_frame0003,3,8,0.734182,0.016355,14.610,
+leave_one_out_gta_roadsign_002_frame0004,3,8,0.739282,0.014325,14.468,
+leave_one_out_gta_roadsign_003_frame0005,3,8,0.737184,0.012130,14.576,
+leave_one_out_gta_roadsign_004_frame0006,3,8,0.733486,0.011865,13.873,

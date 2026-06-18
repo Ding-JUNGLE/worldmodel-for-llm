@@ -209,6 +209,42 @@ internal memory conditioning in future work
 
 `results/final/all_candidate_scores_by_strategy.csv`
 
+## V3 Stronger Evidence
+
+New V3 evidence extends the AP0006 package beyond the original side-by-side demo:
+
+- Demo V3: `media/demo_v3/demo_v3_object_patch_memory_story.mp4`
+- Object-patch reranker: `scripts/external_memory/object_patch_memory_reranker.py`
+- Object-patch result table: `results/final/object_patch_rerank_seed1_8.csv`
+- Demo V3 contact sheets:
+  - `figures/demo_v3/demo_v3_object_patch_contact_sheet.png`
+  - `figures/demo_v3/object_patch_rerank_contact_sheet.png`
+- Memory size curve:
+  - `results/evaluation/memory_size_curve.csv`
+  - `figures/final/memory_size_curve.md`
+- Road-sign robustness:
+  - `results/evaluation/roadsign_memory_robustness.csv`
+  - `figures/final/roadsign_memory_robustness_summary.md`
+- Distractor controls:
+  - `results/evaluation/distractor_memory_controls.csv`
+  - `results/evaluation/distractor_memory_controls.md`
+- Cost analysis:
+  - `results/evaluation/memory_cost_analysis.csv`
+  - `docs/final/memory_card_and_cost_analysis.md`
+- Manual review packet:
+  - `results/evaluation/manual_review_table_to_fill_v3.csv`
+  - `docs/evaluation/manual_review_instructions_v3.md`
+  - `figures/demo_v3/manual_review_contact_sheet_v3.png`
+
+Important V3 readout:
+
+- `object_patch_rerank_seed1_8` still selects `seed8`.
+- `1 crop` falls back to `seed1`, while `2+ crops` switch to `seed8`.
+- leave-one-out and small bbox jitter keep `seed8` in this case study.
+- distractor patch controls also selected `seed8`, so specificity is still limited.
+
+This remains **external reranking** and still **case-study evidence**, not internal memory injection or benchmark-level proof.
+
 ## What this project is
 
 - Base model: `Matrix-Game-2` (external memory is an add-on)

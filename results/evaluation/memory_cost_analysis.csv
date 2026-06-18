@@ -1,0 +1,7 @@
+experiment,number_of_memory_entries,memory_bank_jsonl_size,candidate_video_count,feature_extraction_rerank_runtime_seconds,gpu_memory_impact,artifact_size_bytes
+approved_roadsign_memory_object_patch,4,2556,8,14.127,No internal parameter or attention change; external rerank only,2109693
+memory_size_curve_1_crop,1,807,8,16.170,No internal parameter or attention change; external rerank only,2589
+memory_size_curve_2_crops,2,1614,8,16.164,No internal parameter or attention change; external rerank only,2590
+roadsign_jitter_10pct,4,2704,8,14.534,No internal parameter or attention change; external rerank only,2590
+same_frame_non_roadsign_crop,4,2784,8,,No internal parameter or attention change; external rerank only,2594
+random_crop_memory,4,2627,8,,No internal parameter or attention change; external rerank only,2592

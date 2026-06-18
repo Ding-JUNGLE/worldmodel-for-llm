@@ -1,0 +1,8 @@
+control_name,method_family,num_memory_entries,selected_seed,selected_score,source,notes
+approved_roadsign_memory_object_patch,object_patch_reranker,4,8,0.740770,new_v3_object_patch,approved road-sign crops scored with grid-patch matching
+random_crop_memory,object_patch_reranker,4,8,0.757466,new_v3_object_patch,deterministic distractor crops from non-target regions
+same_frame_non_roadsign_crop,object_patch_reranker,4,8,0.785166,new_v3_object_patch,same-frame left-side non-road-sign crops
+uniform_memory,existing_v2_strategy_table,,1,0.941255,20260617_007 uniform rerank,Generic keyframe memory selected the same seed as baseline.
+recent_only,existing_v2_strategy_table,,7,0.899912,20260617_007 recent_only rerank,Short-term memory changed the selected seed away from baseline.
+wrong_scene_memory,existing_v2_strategy_table,,5,0.661841,20260617_007 wrong_scene rerank,Wrong-scene memory produces a different but scene-misaligned choice.
+random_memory,existing_v2_strategy_table,,1(mode);7(3/10),0.926306,20260617_007 random trials,Existing 10 random-memory trials select seed1 seven times and seed7 three times; seed8 was never selected.

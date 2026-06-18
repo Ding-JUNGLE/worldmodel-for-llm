@@ -1,0 +1,5 @@
+memory_variant,num_memory_entries,selected_seed,selected_score,score_margin,runtime_seconds,notes
+memory_size_curve_1_crop,1,1,0.710167,0.000358,16.170,
+memory_size_curve_2_crops,2,8,0.729899,0.010609,16.164,
+memory_size_curve_4_crops,4,8,0.740770,0.013384,14.127,
+memory_size_curve_all_crops,4,8,0.740770,0.013384,14.465,all_crops equals 4 crops in current approved-memory package
