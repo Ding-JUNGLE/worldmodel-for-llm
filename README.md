@@ -28,7 +28,7 @@ Chinese:
 | 4 | Memory Lifecycle | write / read / update / use | `docs/final/memory_card_and_cost_analysis.md` |
 | 5 | Memory Data | keyframes, crops, bbox, feature vectors | `figures/final/roadsign_memory_target.png` |
 | 6 | Experiment Design | baseline + controls + final method | `results/final/expanded_memory_strategy_scores.csv` |
-| 7 | Demo | no-memory seed1 vs memory seed8 | `media/demo_v2/demo_v2_no_memory_vs_memory_annotated.mp4` |
+| 7 | Demo | no-memory seed1 vs approved memory seed8 | `media/generated_demos_checked/01_main_clean_no_memory_vs_memory_generated_comparison.mp4` |
 | 8 | Results | memory changes selected candidate | `results/final/all_candidate_scores_by_strategy.csv` |
 | 9 | Evidence Strength | case-study + controls | `docs/story/evidence_ladder_v2.md` |
 | 10 | Limitations | not internal memory, not universal proof | `docs/story/limitations_and_next_experiments.md` |
@@ -181,26 +181,41 @@ internal memory conditioning in future work
 一句话中文主线：
 我们冻结 Matrix-Game-2，不训练、不改模型内部结构；在推理阶段外接 memory module，保存 first-visit 的 keyframes / road-sign crops，并在后续多个 candidate videos 中根据 memory similarity 进行 reranking。最终 no-memory 选择 seed1，approved road-sign memory 选择 seed8。
 
-## Quick Path
+## True World-Model Generated Demos
 
-## Human-checked demo videos
+Use these as actual generated-video evidence:
 
-Use these files only after human PASS review (current status: pending review).
-
-| Demo | Human-checked file | Meaning |
+| Demo | File | Meaning |
 |---|---|---|
-| Main V2 clean comparison | `media/demo_checked/01_demo_v2_clean_checked.mp4` | no-memory seed1 vs memory seed8, no blocking overlay |
-| V3 object-patch story | `media/demo_checked/02_demo_v3_story_checked.mp4` | memory write/read/use story |
-| Candidate gallery | `media/demo_checked/03_candidate_gallery_checked.mp4` | candidate-pool comparison |
-| Memory strength slider | `media/demo_checked/04_memory_strength_slider_checked.mp4` | memory influence as reranking weight |
-| Correct vs wrong memory | `media/demo_checked/05_correct_vs_wrong_memory_checked.mp4` | relevant vs distractor memory |
-| Object-patch heatmap | `media/demo_checked/06_object_patch_heatmap_checked.mp4` | object-level memory read visualization |
+| Main clean generated comparison | `media/generated_demos_checked/01_main_clean_no_memory_vs_memory_generated_comparison.mp4` | no-memory seed1 vs approved memory seed8 from true Matrix-Game-2 generated sources |
+| Generated candidate pool gallery (optional) | `media/generated_demos_checked/02_generated_candidate_pool_gallery.mp4` | optional moving gallery assembled from true generated seed clips |
 
-The old annotated demo is preserved for history but is not recommended for presentation:
+Additional true generated backup clips kept in the repo:
+
+- `media/generated_demos_checked/03_backup_generated_sample_a.mp4` - single no-memory seed1 generated clip.
+- `media/generated_demos_checked/04_backup_generated_sample_b.mp4` - single approved-memory seed8 generated clip.
+
+## Visualization / Analysis Demos
+
+These explain the memory method but are not raw world-model rollouts:
+
+| File | Purpose |
+|---|---|
+| `media/demo_v3/demo_v3_object_patch_memory_story.mp4` | memory write/read/use explanation |
+| `media/demo_v3/candidate_gallery_memory_selection.mp4` | candidate-pool visualization |
+| `media/demo_v3/memory_strength_slider_demo.mp4` | external-memory score visualization |
+| `media/demo_v3/correct_vs_wrong_memory_battle.mp4` | control visualization |
+| `media/demo_v3/object_patch_heatmap_demo.mp4` | patch-matching visualization |
+
+## Deprecated
+
+Do not use for presentation:
 
 `media/demo_v2/demo_v2_no_memory_vs_memory_annotated.mp4`
 
-Because the overlay issue may block the right-side video panel, it should not be used as a final recommended clip.
+Reason:
+
+`persistent overlay bug blocks the right-side panel.`
 
 ## V2 demo playback / overlay note
 
@@ -210,9 +225,9 @@ The old file:
 
 is kept as a historical artifact and may include a persistent right-side overlay.
 
-For presentation, use:
+For generated-demo presentation, use:
 
-`media/demo_playable/demo_v2_no_memory_vs_memory_clean_playable.mp4`
+`media/generated_demos_checked/01_main_clean_no_memory_vs_memory_generated_comparison.mp4`
 
 This clean version keeps both panels visible and removes the overlay artifact.
 
@@ -224,7 +239,7 @@ The overlay in the old file is a post-processing visualization artifact, not mod
 
 1. Watch demo:
 
-`media/demo_playable/demo_v2_no_memory_vs_memory_clean_playable.mp4`
+`media/generated_demos_checked/01_main_clean_no_memory_vs_memory_generated_comparison.mp4`
 
 2. Read this README first.
 
@@ -428,7 +443,7 @@ selected candidate becomes final output
 - `results/evaluation/random_memory_trials.csv`: existing random-memory baseline control (10 trials)
 - `results/evaluation/automatic_proxy_metrics.csv`: proxy quality metrics for the same candidates
 - `results/evaluation/manual_review_table_template.csv`: review form for human visual validation (template until filled)
-- `media/demo_v2/demo_v2_no_memory_vs_memory_annotated.mp4`: core demo clip used in slides (seed1 vs seed8)
+- `media/generated_demos_checked/01_main_clean_no_memory_vs_memory_generated_comparison.mp4`: core demo clip used in slides (seed1 vs approved-memory seed8)
 - `figures/demo_v2/demo_v2_contact_sheet.png`: candidate contact sheet
 - `figures/demo_v2/manual_review_contact_sheet.png`: manual-review visual context
 - `figures/final/roadsign_memory_target.png`: road-sign target image used for object-level memory
@@ -440,7 +455,7 @@ selected candidate becomes final output
 
 ### Main demo
 
-`media/demo_v2/demo_v2_no_memory_vs_memory_annotated.mp4`
+`media/generated_demos_checked/01_main_clean_no_memory_vs_memory_generated_comparison.mp4`
 
 Shows:
 
@@ -516,7 +531,7 @@ Recommended 10-12 slide structure:
 | Stage | Requirement | Package evidence |
 |---|---|---|
 | Stage A | Memory module analysis | `docs/final/memory_card_and_cost_analysis.md`, `docs/story/evidence_ladder_v2.md`, this document |
-| Stage B | Memory visualization | `figures/final/memory_pipeline_diagram.md`, `figures/demo_v2/demo_v2_contact_sheet.png`, `figures/final/no_memory_vs_memory_contact_sheet.png`, `media/demo_v2/demo_v2_no_memory_vs_memory_annotated.mp4` |
+| Stage B | Memory visualization | `figures/final/memory_pipeline_diagram.md`, `figures/demo_v2/demo_v2_contact_sheet.png`, `figures/final/no_memory_vs_memory_contact_sheet.png`, `media/demo_v3/demo_v3_object_patch_memory_story.mp4`, `media/demo_v3/object_patch_heatmap_demo.mp4` |
 | Stage C | New memory strategy design | `docs/final/final_assignment_memory_results_v2_expanded.md`, `results/final/expanded_memory_strategy_scores.csv`, `results/final/all_candidate_scores_by_strategy.csv` |
 
 ### Cost analysis
