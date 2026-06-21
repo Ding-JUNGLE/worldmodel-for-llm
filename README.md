@@ -28,7 +28,7 @@ Chinese:
 | 4 | Memory Lifecycle | write / read / update / use | `docs/final/memory_card_and_cost_analysis.md` |
 | 5 | Memory Data | keyframes, crops, bbox, feature vectors | `figures/final/roadsign_memory_target.png` |
 | 6 | Experiment Design | baseline + controls + final method | `results/final/expanded_memory_strategy_scores.csv` |
-| 7 | Demo | no-memory seed1 vs approved memory seed8 | `media/generated_demos_checked/01_main_clean_no_memory_vs_memory_generated_comparison.mp4` |
+| 7 | Demo | no-memory seed1 vs approved memory seed8 | `figures/presentation/01_main_result_no_memory_vs_memory.png` |
 | 8 | Results | memory changes selected candidate | `results/final/all_candidate_scores_by_strategy.csv` |
 | 9 | Evidence Strength | case-study + controls | `docs/story/evidence_ladder_v2.md` |
 | 10 | Limitations | not internal memory, not universal proof | `docs/story/limitations_and_next_experiments.md` |
@@ -181,13 +181,29 @@ internal memory conditioning in future work
 一句话中文主线：
 我们冻结 Matrix-Game-2，不训练、不改模型内部结构；在推理阶段外接 memory module，保存 first-visit 的 keyframes / road-sign crops，并在后续多个 candidate videos 中根据 memory similarity 进行 reranking。最终 no-memory 选择 seed1，approved road-sign memory 选择 seed8。
 
+## Presentation-ready figure pack
+
+Use these polished PNGs for the final PPT / README story. They are the recommended presentation assets for AP0006:
+
+- `figures/presentation/01_main_result_no_memory_vs_memory.png` Main no-memory vs memory comparison
+- `figures/presentation/02_candidate_gallery_memory_selection.png` Candidate gallery summary
+- `figures/presentation/03_memory_pipeline_write_read_use.png` Write / read / use pipeline
+- `figures/presentation/04_memory_card.png` Memory card and cost summary
+- `figures/presentation/05_object_patch_memory_reader.png` Object-patch memory reader
+- `figures/presentation/06_correct_vs_wrong_memory_control.png` Control cases and distractors
+- `figures/presentation/07_memory_strength_reranking_curve.png` Memory strength curve
+- `figures/presentation/08_completed_vs_planned_evidence.png` Completed vs planned evidence
+- `figures/presentation/09_claims_and_limitations.png` Claims and limitations
+
+The older video `figures/presentation/01_main_result_no_memory_vs_memory.png` is historical reference only. Use the static figure above for slides.
+
 ## True World-Model Generated Demos
 
 Use these as actual generated-video evidence:
 
 | Demo | File | Meaning |
 |---|---|---|
-| Main clean generated comparison | `media/generated_demos_checked/01_main_clean_no_memory_vs_memory_generated_comparison.mp4` | no-memory seed1 vs approved memory seed8 from true Matrix-Game-2 generated sources |
+| Main clean generated comparison | `figures/presentation/01_main_result_no_memory_vs_memory.png` | no-memory seed1 vs approved memory seed8 from true Matrix-Game-2 generated sources |
 | Generated candidate pool gallery (optional) | `media/generated_demos_checked/02_generated_candidate_pool_gallery.mp4` | optional moving gallery assembled from true generated seed clips |
 
 Additional true generated backup clips kept in the repo:
@@ -237,7 +253,7 @@ is kept as a historical artifact and may include a persistent right-side overlay
 
 For generated-demo presentation, use:
 
-`media/generated_demos_checked/01_main_clean_no_memory_vs_memory_generated_comparison.mp4`
+`figures/presentation/01_main_result_no_memory_vs_memory.png`
 
 This clean version keeps both panels visible and removes the overlay artifact.
 
@@ -249,7 +265,7 @@ The overlay in the old file is a post-processing visualization artifact, not mod
 
 1. Watch demo:
 
-`media/generated_demos_checked/01_main_clean_no_memory_vs_memory_generated_comparison.mp4`
+`figures/presentation/01_main_result_no_memory_vs_memory.png`
 
 2. Read this README first.
 
@@ -464,7 +480,7 @@ selected candidate becomes final output
 - `results/evaluation/random_memory_trials.csv`: existing random-memory baseline control (10 trials)
 - `results/evaluation/automatic_proxy_metrics.csv`: proxy quality metrics for the same candidates
 - `results/evaluation/manual_review_table_template.csv`: review form for human visual validation (template until filled)
-- `media/generated_demos_checked/01_main_clean_no_memory_vs_memory_generated_comparison.mp4`: core demo clip used in slides (seed1 vs approved-memory seed8)
+- `figures/presentation/01_main_result_no_memory_vs_memory.png`: core demo clip used in slides (seed1 vs approved-memory seed8)
 - `figures/demo_v2/demo_v2_contact_sheet.png`: candidate contact sheet
 - `figures/demo_v2/manual_review_contact_sheet.png`: manual-review visual context
 - `figures/final/roadsign_memory_target.png`: road-sign target image used for object-level memory
@@ -476,7 +492,7 @@ selected candidate becomes final output
 
 ### Main demo
 
-`media/generated_demos_checked/01_main_clean_no_memory_vs_memory_generated_comparison.mp4`
+`figures/presentation/01_main_result_no_memory_vs_memory.png`
 
 Shows:
 

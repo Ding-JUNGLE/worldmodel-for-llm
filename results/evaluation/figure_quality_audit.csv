@@ -1,0 +1,10 @@
+figure_id,png_path,pdf_path,png_bytes,pdf_bytes,status,notes
+01,figures/presentation/01_main_result_no_memory_vs_memory.png,figures/presentation/01_main_result_no_memory_vs_memory.pdf,658902,175583,ppt_ready,real frames from no-memory and approved-memory mp4s
+02,figures/presentation/02_candidate_gallery_memory_selection.png,figures/presentation/02_candidate_gallery_memory_selection.pdf,1585669,332185,ppt_ready,copied polished candidate gallery poster
+03,figures/presentation/03_memory_pipeline_write_read_use.png,figures/presentation/03_memory_pipeline_write_read_use.pdf,222617,145194,ppt_ready,write/read/use pipeline diagram
+04,figures/presentation/04_memory_card.png,figures/presentation/04_memory_card.pdf,235576,204775,ppt_ready,memory card / cost / limitation summary
+05,figures/presentation/05_object_patch_memory_reader.png,figures/presentation/05_object_patch_memory_reader.pdf,442833,160877,ppt_ready,object-patch memory reader with real crop and frame
+06,figures/presentation/06_correct_vs_wrong_memory_control.png,figures/presentation/06_correct_vs_wrong_memory_control.pdf,234812,172483,ppt_ready,approved memory and distractor control cards
+07,figures/presentation/07_memory_strength_reranking_curve.png,figures/presentation/07_memory_strength_reranking_curve.pdf,130349,95733,ppt_ready,memory strength curve from existing CSV
+08,figures/presentation/08_completed_vs_planned_evidence.png,figures/presentation/08_completed_vs_planned_evidence.pdf,191273,140613,ppt_ready,completed vs planned evidence summary
+09,figures/presentation/09_claims_and_limitations.png,figures/presentation/09_claims_and_limitations.pdf,154271,132022,ppt_ready,claims and limitations summary
