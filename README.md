@@ -183,9 +183,48 @@ internal memory conditioning in future work
 
 ## Quick Path
 
-1. Watch demo:
+## Human-checked demo videos
+
+Use these files only after human PASS review (current status: pending review).
+
+| Demo | Human-checked file | Meaning |
+|---|---|---|
+| Main V2 clean comparison | `media/demo_checked/01_demo_v2_clean_checked.mp4` | no-memory seed1 vs memory seed8, no blocking overlay |
+| V3 object-patch story | `media/demo_checked/02_demo_v3_story_checked.mp4` | memory write/read/use story |
+| Candidate gallery | `media/demo_checked/03_candidate_gallery_checked.mp4` | candidate-pool comparison |
+| Memory strength slider | `media/demo_checked/04_memory_strength_slider_checked.mp4` | memory influence as reranking weight |
+| Correct vs wrong memory | `media/demo_checked/05_correct_vs_wrong_memory_checked.mp4` | relevant vs distractor memory |
+| Object-patch heatmap | `media/demo_checked/06_object_patch_heatmap_checked.mp4` | object-level memory read visualization |
+
+The old annotated demo is preserved for history but is not recommended for presentation:
 
 `media/demo_v2/demo_v2_no_memory_vs_memory_annotated.mp4`
+
+Because the overlay issue may block the right-side video panel, it should not be used as a final recommended clip.
+
+## V2 demo playback / overlay note
+
+The old file:
+
+`media/demo_v2/demo_v2_no_memory_vs_memory_annotated.mp4`
+
+is kept as a historical artifact and may include a persistent right-side overlay.
+
+For presentation, use:
+
+`media/demo_playable/demo_v2_no_memory_vs_memory_clean_playable.mp4`
+
+This clean version keeps both panels visible and removes the overlay artifact.
+
+The memory target / road-sign crop is shown separately as:
+
+`figures/demo_v2_memory_target_separate.png`
+
+The overlay in the old file is a post-processing visualization artifact, not model output.
+
+1. Watch demo:
+
+`media/demo_playable/demo_v2_no_memory_vs_memory_clean_playable.mp4`
 
 2. Read this README first.
 
