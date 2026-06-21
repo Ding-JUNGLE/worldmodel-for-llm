@@ -202,10 +202,20 @@ These explain the memory method but are not raw world-model rollouts:
 | File | Purpose |
 |---|---|
 | `media/demo_v3/demo_v3_object_patch_memory_story.mp4` | memory write/read/use explanation |
-| `media/demo_v3/candidate_gallery_memory_selection.mp4` | candidate-pool visualization |
+| `media/demo_v3/candidate_gallery_memory_selection.mp4` | historical candidate-pool visualization |
 | `media/demo_v3/memory_strength_slider_demo.mp4` | external-memory score visualization |
 | `media/demo_v3/correct_vs_wrong_memory_battle.mp4` | control visualization |
 | `media/demo_v3/object_patch_heatmap_demo.mp4` | patch-matching visualization |
+
+### Candidate gallery figure
+
+Use:
+
+`figures/demo_v3/candidate_gallery_memory_selection_poster.png`
+
+This is the recommended presentation asset for explaining the candidate pool and memory-guided selection.
+
+The older MP4 remains a historical visualization file, but the static figure is clearer and better for PPT / report use.
 
 ## Deprecated
 
@@ -303,20 +313,31 @@ This remains **external reranking** and still **case-study evidence**, not inter
 
 This package also adds presentation-facing demos that are visually clearer but still tied to memory-module analysis.
 
+Preferred candidate-gallery presentation asset:
+
+```text
+figures/demo_v3/candidate_gallery_memory_selection_poster.png
+```
+
 ### Demo V3 files
 
 ```text
-media/demo_v3/candidate_gallery_memory_selection.mp4
 media/demo_v3/memory_strength_slider_demo.mp4
 media/demo_v3/correct_vs_wrong_memory_battle.mp4
 media/demo_v3/object_patch_heatmap_demo.mp4
+```
+
+Historical candidate-gallery MP4 kept for reference only:
+
+```text
+media/demo_v3/candidate_gallery_memory_selection.mp4
 ```
 
 ### What each demo proves
 
 | Demo | Purpose |
 |---|---|
-| Candidate Gallery | shows candidate-pool comparison, not only two cherry-picked videos |
+| Candidate Gallery Figure | shows candidate-pool comparison with a cleaner PPT-ready layout and clearer selection story |
 | Memory Strength Slider | visualizes external memory influence as a reranking weight |
 | Correct vs Wrong Memory Battle | tests whether relevant memory matters more than distractor memory |
 | Object-Patch Heatmap | visualizes how object-level memory is read from candidate frames |
