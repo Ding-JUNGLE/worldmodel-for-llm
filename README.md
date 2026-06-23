@@ -4,6 +4,14 @@ Final package for AP0006 Final Project: **Memory Modules in World Models**.
 
 We use Matrix-Game-2 as a frozen world model and add an external inference-time memory module that stores first-visit visual evidence and reranks candidate continuations.
 
+## CVPR-style Final Paper Draft
+
+A CVPR 2026-format paper skeleton is under:
+
+`paper/cvpr2026_ap0006_memory_modules/`
+
+Gate 1 only verifies the template and compilation. The final content will be added in later gates.
+
 ## Ready for PPT
 
 ### 1. One-sentence project claim
