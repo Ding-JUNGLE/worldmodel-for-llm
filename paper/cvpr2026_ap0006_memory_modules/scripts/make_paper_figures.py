@@ -32,8 +32,9 @@ F_PANEL = load_font(FONT_BOLD, 22)
 F_LABEL = load_font(FONT_BOLD, 26)
 F_TEXT = load_font(FONT_REG, 18)
 F_SMALL = load_font(FONT_REG, 16)
-F_NOTE = load_font(FONT_REG, 15)
+F_NOTE = load_font(FONT_REG, 16)
 F_TINY = load_font(FONT_REG, 14)
+F_FORMULA = load_font(FONT_REG, 21)
 
 
 def fit(img, size):
@@ -91,7 +92,7 @@ best_patch = frame.crop((px1, py1, px2, py2))
 best_patch = fit(best_patch, (180, 120))
 
 # Figure 1: paper-style method overview.
-W1, H1 = 1800, 620
+W1, H1 = 1840, 660
 fig1 = Image.new('RGB', (W1, H1), 'white')
 d1 = ImageDraw.Draw(fig1)
 
@@ -99,8 +100,8 @@ panels = {
     'a': (40, 60, 290, 400),
     'b': (340, 60, 560, 400),
     'c': (610, 60, 900, 400),
-    'd': (950, 60, 1410, 400),
-    'e': (1460, 60, 1760, 400),
+    'd': (950, 60, 1390, 400),
+    'e': (1420, 60, 1800, 400),
 }
 for key in panels:
     rounded(d1, panels[key])
@@ -165,10 +166,10 @@ for j in range(1, rows):
 hx1, hy1 = fx + px1, fy + py1
 hx2, hy2 = fx + px2, fy + py2
 g.rectangle((hx1, hy1, hx2, hy2), outline=RESULT, width=4)
-add_text(d1, (d[0] + 18, d[1] + 372), 'Regular grid patches', F_TEXT, BLACK)
-add_text(d1, (d[0] + 242, d[1] + 372), 'Feature encoder', F_TEXT, BLACK)
-add_text(d1, (d[0] + 18, d[1] + 402), 'Cosine similarity', F_TEXT, BLACK)
-add_text(d1, (d[0] + 242, d[1] + 402), 'best local patch', F_TEXT, BLACK)
+add_text(d1, (d[0] + 18, d[1] + 372), 'Regular grid patches', F_SMALL, BLACK)
+add_text(d1, (d[0] + 260, d[1] + 372), 'Feature encoder', F_SMALL, BLACK)
+add_text(d1, (d[0] + 18, d[1] + 404), 'Cosine similarity', F_SMALL, BLACK)
+add_text(d1, (d[0] + 260, d[1] + 404), 'best local patch', F_SMALL, BLACK)
 
 # (e) Reranking result.
 e = panels['e']
@@ -179,28 +180,30 @@ fig1.paste(mini1, (e[0] + 22, e[1] + 78))
 d1.rectangle((e[0] + 22, e[1] + 78, e[0] + 140, e[1] + 156), outline=BORDER, width=1)
 fig1.paste(mini8, (e[0] + 22, e[1] + 232))
 d1.rectangle((e[0] + 22, e[1] + 232, e[0] + 140, e[1] + 310), outline=RESULT, width=3)
-arrow(d1, (e[0] + 176, e[1] + 118), (e[0] + 176, e[1] + 270), color=RESULT)
-add_text(d1, (e[0] + 162, e[1] + 86), 'No memory: seed1', F_TEXT, BLACK)
-add_text(d1, (e[0] + 162, e[1] + 240), 'With memory: seed8', F_TEXT, BLACK)
+arrow(d1, (e[0] + 204, e[1] + 128), (e[0] + 204, e[1] + 282), color=RESULT)
+add_text(d1, (e[0] + 168, e[1] + 82), 'No memory:', F_TEXT, BLACK)
+add_text(d1, (e[0] + 168, e[1] + 108), 'seed1', F_TEXT, BLACK)
+add_text(d1, (e[0] + 168, e[1] + 236), 'With memory:', F_TEXT, BLACK)
+add_text(d1, (e[0] + 168, e[1] + 262), 'seed8', F_TEXT, BLACK)
 add_text(d1, (e[0] + 24, e[1] + 344), 'seed1 -> seed8', F_LABEL, RESULT)
 add_text(d1, (e[0] + 24, e[1] + 376), 'selected output changes', F_SMALL, GRAY)
 
 # Notes.
-rounded(d1, (80, 500, 840, 550), outline=BORDER, fill=LIGHT, width=1, radius=12)
-add_text(d1, (100, 516), 'No object segmentation. Patches are regular grid cells.', F_TEXT, BLACK)
-rounded(d1, (940, 500, 1710, 550), outline=BORDER, fill=LIGHT, width=1, radius=12)
-add_text(d1, (960, 516), 'ResNet / DINO / CLIP are feature extractors.', F_TEXT, BLACK)
+rounded(d1, (80, 560, 840, 612), outline=BORDER, fill=LIGHT, width=1, radius=12)
+add_text(d1, (100, 578), 'No object segmentation. Patches are regular grid cells.', F_TEXT, BLACK)
+rounded(d1, (940, 560, 1710, 612), outline=BORDER, fill=LIGHT, width=1, radius=12)
+add_text(d1, (960, 578), 'ResNet / DINO / CLIP are feature extractors.', F_TEXT, BLACK)
 save_outputs(fig1, 'fig1_method_overview')
 
 # Figure 2: patch-matching evidence.
-W2, H2 = 1100, 900
+W2, H2 = 1100, 940
 fig2 = Image.new('RGB', (W2, H2), 'white')
 d2 = ImageDraw.Draw(fig2)
 pan2 = {
     'a': (40, 40, 320, 290),
     'b': (360, 40, 1060, 410),
-    'c': (40, 340, 540, 720),
-    'd': (580, 470, 1060, 820),
+    'c': (40, 340, 540, 750),
+    'd': (580, 490, 1060, 850),
 }
 for key in pan2:
     rounded(d2, pan2[key])
@@ -211,7 +214,7 @@ add_text(d2, (pa[0] + 16, pa[1] + 12), '(a) Memory crop', F_PANEL, BLACK)
 mc = fit(memory_crop, (220, 150))
 fig2.paste(mc, (pa[0] + 28, pa[1] + 72))
 d2.rectangle((pa[0] + 28, pa[1] + 72, pa[0] + 248, pa[1] + 222), outline=MEM, width=3)
-add_text(d2, (pa[0] + 28, pa[1] + 238), 'stored local visual cue', F_SMALL, GRAY)
+add_text(d2, (pa[0] + 28, pa[1] + 226), 'stored local visual cue', F_TEXT, GRAY)
 
 # (b) candidate frame with grid
 pb = pan2['b']
@@ -245,9 +248,10 @@ d2.rectangle((pc[0] + 286, pc[1] + 76, pc[0] + 466, pc[1] + 196), outline=RESULT
 arrow(d2, (pc[0] + 214, pc[1] + 136), (pc[0] + 276, pc[1] + 136), color=GRAY)
 add_text(d2, (pc[0] + 52, pc[1] + 212), 'Memory crop', F_SMALL, BLACK)
 add_text(d2, (pc[0] + 318, pc[1] + 212), 'Best-matching patch', F_SMALL, BLACK)
-rounded(d2, (pc[0] + 30, pc[1] + 262, pc[0] + 470, pc[1] + 336), outline=BORDER, fill=LIGHT, width=1, radius=12)
-add_center_text(d2, ((pc[0] + 250), pc[1] + 300), 's_{j,t,k} = cos(f(m), f(p_{j,t,k}))', F_TEXT, BLACK)
-add_text(d2, (pc[0] + 30, pc[1] + 356), 'No object segmentation: one grid cell is selected as the best local match.', F_SMALL, GRAY)
+rounded(d2, (pc[0] + 30, pc[1] + 248, pc[0] + 470, pc[1] + 330), outline=BORDER, fill=LIGHT, width=1, radius=12)
+add_center_text(d2, ((pc[0] + 250), pc[1] + 289), 's_{j,t,k} = cos(f(m), f(p_{j,t,k}))', F_FORMULA, BLACK)
+add_text(d2, (pc[0] + 30, pc[1] + 354), 'No object segmentation:', F_TEXT, GRAY)
+add_text(d2, (pc[0] + 30, pc[1] + 380), 'one grid cell is selected as the best local match.', F_TEXT, GRAY)
 
 # (d) seed comparison
 pd = pan2['d']
