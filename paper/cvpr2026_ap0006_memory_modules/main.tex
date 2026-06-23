@@ -38,10 +38,21 @@ This section is reserved for the teammate responsible for analyzing MatrixGame 3
 
 \section{Stage C: External Visual Memory Reranking}
 \subsection{Write and store}
-Stage C targets MatrixGame-2 with the generator kept frozen throughout the pipeline. We implement memory entirely outside the model and apply it only at inference time. When the first visit to a scene reveals a task-relevant object, such as a road sign, we write that evidence into a small memory bank as an object crop together with its feature vector and lightweight metadata. Typical fields include the crop path, frame index, candidate or scene identifier, and a short semantic tag indicating the target object. This design keeps the stored unit explicit and auditable: the memory bank contains visual evidence rather than hidden recurrent state.
+Stage C targets frozen MatrixGame-2 with the generator kept unchanged throughout the pipeline. We implement memory entirely outside the model and apply it as external inference-time memory. When the first visit to a scene reveals a task-relevant object, such as a road sign, we write that evidence into a small memory bank as an object crop together with its feature vector and lightweight metadata. Typical fields include the crop path, frame index, candidate or scene identifier, and a short semantic tag indicating the target object. This design keeps the stored unit explicit and auditable: the memory bank contains visual evidence rather than hidden recurrent state. Figure~\ref{fig:method} summarizes the full write-read-rerank pipeline.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig1_method_overview.pdf}
+  \caption{
+  Overview of our Stage C external memory reranking pipeline. MatrixGame-2 is kept frozen.
+  The memory module writes first-visit visual evidence, reads it through patch-level
+  feature matching on regular grid patches, and reranks candidate videos.
+  }
+  \label{fig:method}
+\end{figure*}
 
 \subsection{Read, match, and score}
-At read time, the reranker evaluates a candidate set of generated videos indexed by $j$. From candidate $j$, we sample frames indexed by $t$ and split each frame into regular grid patches indexed by $k$. Let $m$ denote a stored memory crop, $p_{j,t,k}$ the $k$-th patch from frame $t$ of candidate $j$, and $f(\cdot)$ a visual encoder. Depending on environment availability, $f$ can be instantiated with DINOv2, CLIP, torchvision ResNet18, or a normalized RGB fallback. These components are used as feature extractors only; they are not segmentation models.
+At read time, the reranker evaluates a candidate set of generated videos indexed by $j$. From candidate $j$, we sample frames indexed by $t$ and split each frame into regular grid patches indexed by $k$. Let $m$ denote a stored memory crop, $p_{j,t,k}$ the $k$-th patch from frame $t$ of candidate $j$, and $f(\cdot)$ a visual feature encoder. Depending on environment availability, $f$ can be instantiated with DINOv2, CLIP, torchvision ResNet18, or a normalized RGB fallback. These components are used as feature extractors only; they are not segmentation models.
 
 After feature normalization, we score each patch against memory using cosine-style similarity:
 \begin{equation}
@@ -55,10 +66,21 @@ Frame-level scores are then averaged across sampled frames to obtain a candidate
 \begin{equation}
  S_j = \frac{1}{T}\sum_t S_{j,t}, \qquad j^{\star} = \arg\max_j S_j.
 \end{equation}
-The reranker finally selects the candidate with the largest $S_j$. In words, memory is used neither to retrain the generator nor to alter its internal attention, but to select the rollout whose visible patches best agree with first-visit evidence.
+The reranker finally selects the candidate with the largest $S_j$. Figure~\ref{fig:patch} illustrates this patch-level memory reading process with a stored crop, regular grid patches, and the selected best-matching cell. In words, memory is used neither to retrain the generator nor to alter its internal attention, but to select the rollout whose visible patches best agree with first-visit evidence.
 
 \section{Experiments and Results}
 Our current evidence is a compact case study centered on road-sign memory. The baseline system samples a pool of candidate videos from frozen MatrixGame-2 and selects a default candidate without external memory. The Stage C reranker reuses the same candidate pool but changes the final choice according to object-patch similarity. In the approved road-sign setting, the selected candidate changes from seed1 to seed8, showing that external memory can alter output selection even when the generator itself is unchanged.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/fig2_patch_matching_evidence.pdf}
+  \caption{
+  Patch-level memory read. A stored memory crop is compared with regular-grid patches
+  from candidate frames. The best-matching patch provides local evidence for
+  memory-guided reranking.
+  }
+  \label{fig:patch}
+\end{figure}
 
 \begin{table}[t]
 \centering
@@ -78,7 +100,7 @@ Road-sign memory & crop + patch match & seed8 & selection switches \\
 \label{tab:main_result}
 \end{table}
 
-The accompanying project artifacts provide qualitative support for this switch: a generated comparison demo, a candidate gallery figure, and an object-patch memory reader visualization. We treat these assets as evidence for changed candidate selection, not as proof that MatrixGame-2 has acquired an internal memory mechanism. The contribution here is the external reranker itself: a simple memory card, a transparent matching rule, and an observable difference in which candidate is chosen.
+The accompanying project artifacts provide qualitative support for this switch: a generated comparison demo and the patch-level illustration in Figure~\ref{fig:patch}. We treat these assets as evidence for candidate reranking, not as proof that MatrixGame-2 has acquired an internal memory mechanism. The contribution here is the external reranker itself: a simple memory card, a transparent matching rule, and an observable difference in which candidate is chosen.
 
 \section{Limitations and Conclusion}
 This study has several limitations. First, the mechanism is external reranking only; it does not modify model parameters, hidden state, or attention inside MatrixGame-2. Second, the current evidence is limited to a small candidate pool and a small number of scenarios, so the results should be interpreted as qualitative or small-scale case-study evidence rather than broad statistical validation. Third, Stage A remains pending teammate contribution, so the full paper will need a verified MatrixGame 3.0 analysis before final submission.
