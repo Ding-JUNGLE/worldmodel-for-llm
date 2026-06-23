@@ -1,0 +1,11 @@
+category,item,status,issue,action_taken
+story,Paper follows Stage A placeholder plus Stage C external reranker story,PASS,,No change needed
+terminology,Use regular grid patches and patch-level feature matching consistently,WARN_FIXED,Found mixed wording such as regular patches and object-patch similarity,Unified wording in main.tex
+claims,No unsafe claim about internal memory or segmentation,PASS,,No change needed
+figures,Figure 1 and Figure 2 captions match actual visuals,PASS,,No change needed
+tables,Table 1 matches seed1 without memory and seed8 with memory,PASS,,No change needed
+formulas,Variables and equations are defined consistently,PASS,,No change needed
+references,Repository references present and citations resolve,WARN_FIXED,Entries existed but were uncited and bib items lacked author/year,Added two citations and completed bib metadata
+page_limit,PDF stays within CVPR 4-page limit,PASS,,Rebuilt paper and confirmed PAGES=3
+stage_a,Only approved Stage A placeholder remains,WARN_LEFT_FOR_TEAMMATE,Stage A content is still teammate-owned placeholder,Left placeholder and documented teammate follow-up
+stage_c,Stage C remains external inference-time memory on frozen MatrixGame-2,PASS,,No change needed
