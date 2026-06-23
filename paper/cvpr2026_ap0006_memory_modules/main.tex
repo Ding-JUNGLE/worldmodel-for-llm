@@ -7,53 +7,85 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{booktabs}
-\usepackage{multirow}
 \usepackage{xcolor}
-\usepackage{url}
-
-\definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
 \usepackage[pagebackref,breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
 
+\definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
 \def\paperID{AP0006}
 \def\confName{CVPR}
 \def\confYear{2026}
 
 \title{External Visual Memory Reranking for Frozen Game World Models}
-
-\author{
-AP0006 Final Project Team\\
-{\tt\small TODO: add names}
-}
+\author{AP0006 Final Project Team}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-TODO: Write after Stage A and Stage C are finalized.
+Long-horizon world generation often drifts: objects disappear, spatial cues move, and the model forgets first-visit evidence needed for later consistency. This paper studies memory modules for game world models through the AP0006 Stage A/Stage C structure. Stage A is reserved for a teammate's forthcoming analysis of MatrixGame 3.0. Our implemented contribution is Stage C, a lightweight external memory module built on top of frozen MatrixGame-2 at inference time. The module writes first-visit visual evidence as object crops and descriptors, reads memory through patch-level feature matching between stored crops and sampled candidate frames, and reranks generated candidate videos. With approved road-sign memory, the selected output changes from seed1 to seed8. The resulting mechanism is lightweight, interpretable, and does not modify model weights, attention, or training.
 \end{abstract}
 
 \section{Introduction}
-TODO: Short motivation about memory modules in world models.
+World models can generate visually plausible short clips, yet long-horizon consistency remains difficult. A scene may initially contain a useful landmark or target object, but later generations can forget where it was, replace it with distractors, or select a rollout that no longer respects earlier evidence. This motivates a practical memory question for generative world models: what should be stored, when should memory be read, and how should it influence later outputs?
 
-\section{Stage A: MatrixGame 3.0 Memory Analysis}
+Our AP0006 project follows a two-stage structure. Stage A is reserved for teammate analysis of MatrixGame 3.0 memory behavior. Our main implemented contribution is Stage C on frozen MatrixGame-2, where we add an inference-time external memory module without modifying the base generator. The module stores first-visit visual evidence, compares it against regular patches sampled from candidate videos, and reranks the candidate pool using an interpretable similarity score. The goal is not to improve raw realism, but to study whether a lightweight memory interface can change which generated rollout is selected for better object-level consistency.
+
+\section{Stage A: MatrixGame 3.0 Placeholder}
+\noindent\texttt{TODO\_TEAMMATE\_MATRIXGAME3\_STAGE\_A}
+
 \noindent\textbf{Team placeholder.}
-This section is reserved for the team member responsible for analyzing MatrixGame 3.0.
-The final version should describe where MatrixGame 3.0 writes, reads, and updates memory;
-what data structure is used; which code locations implement the mechanism; and how one
-concrete input example demonstrates memory influence.
+This section is reserved for the teammate responsible for analyzing MatrixGame 3.0. The final version should identify where MatrixGame 3.0 writes, reads, and updates memory, what data structures represent memory, which code locations implement the mechanism, and how one concrete input example demonstrates memory influence. We intentionally leave this section compact in the current draft to avoid inventing unverified details.
 
-\section{Stage C: External Memory Reranking on MatrixGame-2}
-TODO: Our main contribution.
-We keep MatrixGame-2 frozen and implement an external inference-time memory module.
+\section{Stage C: External Visual Memory Reranking}
+\subsection{Write and store}
+Stage C targets MatrixGame-2 with the generator kept frozen throughout the pipeline. We implement memory entirely outside the model and apply it only at inference time. When the first visit to a scene reveals a task-relevant object, such as a road sign, we write that evidence into a small memory bank as an object crop together with its feature vector and lightweight metadata. Typical fields include the crop path, frame index, candidate or scene identifier, and a short semantic tag indicating the target object. This design keeps the stored unit explicit and auditable: the memory bank contains visual evidence rather than hidden recurrent state.
+
+\subsection{Read, match, and score}
+At read time, the reranker evaluates a candidate set of generated videos indexed by $j$. From candidate $j$, we sample frames indexed by $t$ and split each frame into regular grid patches indexed by $k$. Let $m$ denote a stored memory crop, $p_{j,t,k}$ the $k$-th patch from frame $t$ of candidate $j$, and $f(\cdot)$ a visual encoder. Depending on environment availability, $f$ can be instantiated with DINOv2, CLIP, torchvision ResNet18, or a normalized RGB fallback. These components are used as feature extractors only; they are not segmentation models.
+
+After feature normalization, we score each patch against memory using cosine-style similarity:
+\begin{equation}
+ s_{j,t,k} = \cos\left(f(m), f\left(p_{j,t,k}\right)\right).
+\end{equation}
+For each frame, we keep the strongest matching patches and average them:
+\begin{equation}
+ S_{j,t} = \frac{1}{K'} \sum_{k \in \mathrm{TopK}} s_{j,t,k}.
+\end{equation}
+Frame-level scores are then averaged across sampled frames to obtain a candidate-level memory score,
+\begin{equation}
+ S_j = \frac{1}{T}\sum_t S_{j,t}, \qquad j^{\star} = \arg\max_j S_j.
+\end{equation}
+The reranker finally selects the candidate with the largest $S_j$. In words, memory is used neither to retrain the generator nor to alter its internal attention, but to select the rollout whose visible patches best agree with first-visit evidence.
 
 \section{Experiments and Results}
-TODO: Add at most two figures and one compact table.
+Our current evidence is a compact case study centered on road-sign memory. The baseline system samples a pool of candidate videos from frozen MatrixGame-2 and selects a default candidate without external memory. The Stage C reranker reuses the same candidate pool but changes the final choice according to object-patch similarity. In the approved road-sign setting, the selected candidate changes from seed1 to seed8, showing that external memory can alter output selection even when the generator itself is unchanged.
+
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{lccc}
+\toprule
+Setting & Memory & Selected Seed & Interpretation \\
+\midrule
+No memory & none & seed1 & default choice \\
+Road-sign memory & crop + patch match & seed8 & selection switches \\
+\bottomrule
+\end{tabular}
+}
+\caption{External memory changes candidate selection in the MatrixGame-2 candidate pool.}
+\label{tab:main_result}
+\end{table}
+
+The accompanying project artifacts provide qualitative support for this switch: a generated comparison demo, a candidate gallery figure, and an object-patch memory reader visualization. We treat these assets as evidence for changed candidate selection, not as proof that MatrixGame-2 has acquired an internal memory mechanism. The contribution here is the external reranker itself: a simple memory card, a transparent matching rule, and an observable difference in which candidate is chosen.
 
 \section{Limitations and Conclusion}
-TODO: External reranking only; limited scenes/seeds; Stage A pending.
+This study has several limitations. First, the mechanism is external reranking only; it does not modify model parameters, hidden state, or attention inside MatrixGame-2. Second, the current evidence is limited to a small candidate pool and a small number of scenarios, so the results should be interpreted as qualitative or small-scale case-study evidence rather than broad statistical validation. Third, Stage A remains pending teammate contribution, so the full paper will need a verified MatrixGame 3.0 analysis before final submission.
 
-{
-\small
+Even with these constraints, the project clarifies a useful design point for memory modules in world models. A lightweight bank of first-visit visual evidence, combined with patch-level matching and candidate reranking, can produce an interpretable change in selected output from seed1 to seed8 without retraining the base model. The contribution is therefore not raw generation quality, but an explicit memory mechanism for consistency-oriented candidate selection.
+
+{\small
 \bibliographystyle{ieeenat_fullname}
 \bibliography{references}
 }
