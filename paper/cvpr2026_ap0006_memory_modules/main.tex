@@ -44,9 +44,10 @@ Stage C targets frozen MatrixGame-2 with the generator kept unchanged throughout
   \centering
   \includegraphics[width=\textwidth]{figures/fig1_method_overview.pdf}
   \caption{
-  Overview of our Stage C external memory reranking pipeline. MatrixGame-2 is kept frozen.
-  The memory module writes first-visit visual evidence, reads it through patch-level
-  feature matching on regular grid patches, and reranks candidate videos.
+  Overview of the external memory reranking pipeline. MatrixGame-2 is kept frozen.
+  The memory module writes first-visit visual evidence, reads it through regular-grid
+  patch matching, and reranks generated candidate videos. The main observed
+  selection changes from seed1 without memory to seed8 with approved visual memory.
   }
   \label{fig:method}
 \end{figure*}
@@ -75,9 +76,9 @@ Our current evidence is a compact case study centered on road-sign memory. The b
   \centering
   \includegraphics[width=\linewidth]{figures/fig2_patch_matching_evidence.pdf}
   \caption{
-  Patch-level memory read. A stored memory crop is compared with regular-grid patches
-  from candidate frames. The best-matching patch provides local evidence for
-  memory-guided reranking.
+  Patch-level memory read. A stored memory crop is compared with regular-grid
+  patches from candidate frames using a visual feature encoder and cosine-style
+  similarity. No object segmentation is used; patches are regular grid cells.
   }
   \label{fig:patch}
 \end{figure}

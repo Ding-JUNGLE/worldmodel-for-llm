@@ -5,36 +5,34 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 ROOT = Path('/mnt/data1/dgw/github_upload/worldmodel-for-llm')
 PAPER = ROOT / 'paper/cvpr2026_ap0006_memory_modules'
 FIGDIR = PAPER / 'figures'
-SRC1 = ROOT / 'figures/presentation/01_main_result_no_memory_vs_memory.png'
+SRC = ROOT / 'figures/presentation/01_main_result_no_memory_vs_memory.png'
 
 RESAMPLE = getattr(Image, 'Resampling', Image).LANCZOS
 FONT_REG = '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
 FONT_BOLD = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
 
-BLACK = (30, 34, 42)
-GRAY = (100, 107, 117)
+BLACK = (32, 37, 45)
+GRAY = (103, 112, 122)
 LIGHT = (247, 248, 250)
-BORDER = (198, 204, 214)
-MEM = (230, 126, 34)
-RESULT = (36, 99, 235)
-HILITE = (220, 38, 38)
-GREEN = (22, 163, 74)
+BORDER = (196, 203, 214)
+MEM = (221, 122, 42)
+SEL = (41, 98, 255)
+ARROW = (120, 128, 138)
 
 
-def load_font(path, size):
+def font(path, size):
     try:
         return ImageFont.truetype(path, size)
     except Exception:
         return ImageFont.load_default()
 
 
-F_PANEL = load_font(FONT_BOLD, 22)
-F_LABEL = load_font(FONT_BOLD, 26)
-F_TEXT = load_font(FONT_REG, 18)
-F_SMALL = load_font(FONT_REG, 16)
-F_NOTE = load_font(FONT_REG, 16)
-F_TINY = load_font(FONT_REG, 14)
-F_FORMULA = load_font(FONT_REG, 21)
+F_PANEL = font(FONT_BOLD, 26)
+F_HEAD = font(FONT_BOLD, 24)
+F_TEXT = font(FONT_REG, 22)
+F_SMALL = font(FONT_REG, 19)
+F_TINY = font(FONT_REG, 17)
+F_NOTE = font(FONT_REG, 20)
 
 
 def fit(img, size):
@@ -45,23 +43,27 @@ def rounded(draw, xy, outline=BORDER, fill=(255, 255, 255), width=2, radius=18):
     draw.rounded_rectangle(xy, radius=radius, outline=outline, fill=fill, width=width)
 
 
-def add_text(draw, xy, text, font, fill=BLACK):
-    draw.text(xy, text, font=font, fill=fill)
+def text(draw, xy, msg, fnt, fill=BLACK):
+    draw.text(xy, msg, font=fnt, fill=fill)
 
 
-def add_center_text(draw, center, text, font, fill=BLACK):
-    box = draw.textbbox((0, 0), text, font=font)
-    x = center[0] - (box[2] - box[0]) / 2
-    y = center[1] - (box[3] - box[1]) / 2
-    draw.text((x, y), text, font=font, fill=fill)
+def centered(draw, center, msg, fnt, fill=BLACK):
+    box = draw.textbbox((0, 0), msg, font=fnt)
+    draw.text((center[0] - (box[2] - box[0]) / 2, center[1] - (box[3] - box[1]) / 2), msg, font=fnt, fill=fill)
 
 
-def arrow(draw, start, end, color=GRAY, width=4, head=12):
+def arrow(draw, start, end, color=ARROW, width=5, head=14):
     draw.line((start[0], start[1], end[0], end[1]), fill=color, width=width)
-    if end[0] >= start[0]:
-        pts = [(end[0], end[1]), (end[0] - head, end[1] - head // 2), (end[0] - head, end[1] + head // 2)]
+    if abs(end[0] - start[0]) >= abs(end[1] - start[1]):
+        if end[0] >= start[0]:
+            pts = [(end[0], end[1]), (end[0] - head, end[1] - head // 2), (end[0] - head, end[1] + head // 2)]
+        else:
+            pts = [(end[0], end[1]), (end[0] + head, end[1] - head // 2), (end[0] + head, end[1] + head // 2)]
     else:
-        pts = [(end[0], end[1]), (end[0] + head, end[1] - head // 2), (end[0] + head, end[1] + head // 2)]
+        if end[1] >= start[1]:
+            pts = [(end[0], end[1]), (end[0] - head // 2, end[1] - head), (end[0] + head // 2, end[1] - head)]
+        else:
+            pts = [(end[0], end[1]), (end[0] - head // 2, end[1] + head), (end[0] + head // 2, end[1] + head)]
     draw.polygon(pts, fill=color)
 
 
@@ -72,200 +74,158 @@ def save_outputs(img, stem):
     img.convert('RGB').save(pdf, 'PDF', resolution=300.0)
 
 
-src = Image.open(SRC1).convert('RGB')
+src = Image.open(SRC).convert('RGB')
 seed1 = src.crop((125, 345, 790, 725))
 seed8 = src.crop((1010, 345, 1685, 725))
-first_visit = fit(seed8, (210, 130))
-memory_crop = seed8.crop((395, 28, 650, 190))
-memory_crop = fit(memory_crop, (150, 110))
-
-# Patch-matching support assets.
-frame = fit(seed8, (520, 290))
-fw, fh = frame.size
+first_visit = fit(seed8, (320, 170))
+memory_crop = fit(seed8.crop((392, 22, 650, 190)), (220, 140))
+setup_frame = fit(seed8, (280, 150))
+setup_crop = fit(memory_crop, (190, 120))
+thumb1 = fit(seed1, (140, 90))
+thumb8 = fit(seed8, (140, 90))
+frame = fit(seed8, (520, 240))
 cols, rows = 5, 3
+fw, fh = frame.size
 cell = (3, 0)
 px1 = int(cell[0] * fw / cols)
 py1 = int(cell[1] * fh / rows)
 px2 = int((cell[0] + 1) * fw / cols)
 py2 = int((cell[1] + 1) * fh / rows)
-best_patch = frame.crop((px1, py1, px2, py2))
-best_patch = fit(best_patch, (180, 120))
+best_patch = fit(frame.crop((px1, py1, px2, py2)), (200, 130))
 
-# Figure 1: paper-style method overview.
-W1, H1 = 1840, 660
+# Figure 1: two-row paper block diagram.
+W1, H1 = 1800, 1040
 fig1 = Image.new('RGB', (W1, H1), 'white')
 d1 = ImageDraw.Draw(fig1)
 
-panels = {
-    'a': (40, 60, 290, 400),
-    'b': (340, 60, 560, 400),
-    'c': (610, 60, 900, 400),
-    'd': (950, 60, 1390, 400),
-    'e': (1420, 60, 1800, 400),
-}
-for key in panels:
-    rounded(d1, panels[key])
+a = (50, 50, 576, 410)
+b = (636, 50, 1162, 410)
+c = (1222, 50, 1748, 410)
+d = (50, 500, 910, 870)
+e = (970, 500, 1750, 870)
+for panel in [a, b, c, d, e]:
+    rounded(d1, panel, radius=20)
 
-# Connecting arrows.
-order = ['a', 'b', 'c', 'd', 'e']
-for left, right in zip(order[:-1], order[1:]):
-    lx = panels[left][2]
-    rx = panels[right][0]
-    y = (panels[left][1] + panels[left][3]) // 2
-    arrow(d1, (lx + 8, y), (rx - 12, y), color=GRAY)
+# top-row arrows
+arrow(d1, (a[2] + 12, (a[1] + a[3]) // 2), (b[0] - 12, (b[1] + b[3]) // 2))
+arrow(d1, (b[2] + 12, (b[1] + b[3]) // 2), (c[0] - 12, (c[1] + c[3]) // 2))
+# row transition and rerank arrow
+arrow(d1, ((c[0] + c[2]) // 2, c[3] + 12), ((c[0] + c[2]) // 2, d[1] - 18))
+arrow(d1, (d[2] + 12, (d[1] + d[3]) // 2), (e[0] - 12, (e[1] + e[3]) // 2))
 
-# (a) Problem setup.
-a = panels['a']
-add_text(d1, (a[0] + 16, a[1] + 12), '(a) Problem setup', F_PANEL, BLACK)
-fig1.paste(first_visit, (a[0] + 18, a[1] + 54))
-d1.rectangle((a[0] + 18, a[1] + 54, a[0] + 228, a[1] + 184), outline=BORDER, width=1)
-fig1.paste(memory_crop, (a[0] + 92, a[1] + 210))
-d1.rectangle((a[0] + 92, a[1] + 210, a[0] + 242, a[1] + 320), outline=MEM, width=3)
-arrow(d1, (a[0] + 124, a[1] + 184), (a[0] + 146, a[1] + 204), color=MEM)
-add_text(d1, (a[0] + 18, a[1] + 330), 'First-visit visual evidence', F_TEXT, BLACK)
-add_text(d1, (a[0] + 18, a[1] + 356), 'road-sign crop written once', F_SMALL, GRAY)
+# panel (a)
+text(d1, (a[0] + 28, a[1] + 24), '(a) Setup', F_PANEL)
+fig1.paste(setup_frame, (a[0] + 108, a[1] + 76))
+d1.rectangle((a[0] + 108, a[1] + 76, a[0] + 388, a[1] + 226), outline=BORDER, width=1)
+centered(d1, (a[0] + 248, a[1] + 252), 'first-visit frame', F_SMALL)
+fig1.paste(setup_crop, (a[0] + 153, a[1] + 270))
+d1.rectangle((a[0] + 153, a[1] + 270, a[0] + 343, a[1] + 390), outline=MEM, width=3)
+arrow(d1, (a[0] + 248, a[1] + 226), (a[0] + 248, a[1] + 258), color=MEM, width=4)
+centered(d1, (a[0] + 248, a[1] + 404), 'road-sign crop / visual cue', F_TINY, MEM)
 
-# (b) Memory bank.
-b = panels['b']
-add_text(d1, (b[0] + 16, b[1] + 12), '(b) Memory write/store', F_PANEL, BLACK)
-for i, label in enumerate(['crop path', 'feature vector', 'metadata']):
-    y = b[1] + 90 + i * 70
-    rounded(d1, (b[0] + 24, y, b[2] - 24, y + 46), outline=MEM, fill=LIGHT, width=2, radius=12)
-    add_text(d1, (b[0] + 42, y + 12), label, F_TEXT, BLACK)
-add_text(d1, (b[0] + 24, b[1] + 318), 'External memory', F_LABEL, MEM)
-add_text(d1, (b[0] + 24, b[1] + 350), 'inference-time only', F_SMALL, GRAY)
+# panel (b)
+text(d1, (b[0] + 28, b[1] + 24), '(b) Write/store', F_PANEL)
+for idx, label in enumerate(['crop path', 'feature vector', 'metadata']):
+    yy = b[1] + 110 + idx * 82
+    rounded(d1, (b[0] + 88, yy, b[2] - 88, yy + 50), outline=MEM, fill=LIGHT, width=2, radius=14)
+    text(d1, (b[0] + 130, yy + 13), label, F_TEXT)
+text(d1, (b[0] + 88, b[1] + 328), 'External memory', F_HEAD, MEM)
+text(d1, (b[0] + 88, b[1] + 360), 'inference-time storage', F_SMALL, GRAY)
 
-# (c) Candidate generation.
-c = panels['c']
-add_text(d1, (c[0] + 16, c[1] + 12), '(c) Candidate generation', F_PANEL, BLACK)
-add_text(d1, (c[0] + 16, c[1] + 48), 'Frozen MatrixGame-2', F_LABEL, BLACK)
-thumb1 = fit(seed1, (78, 78))
-thumb8 = fit(seed8, (78, 78))
-fig1.paste(thumb1, (c[0] + 24, c[1] + 110))
-d1.rectangle((c[0] + 24, c[1] + 110, c[0] + 102, c[1] + 188), outline=BORDER, width=1)
-fig1.paste(thumb8, (c[0] + 188, c[1] + 110))
-d1.rectangle((c[0] + 188, c[1] + 110, c[0] + 266, c[1] + 188), outline=BORDER, width=1)
-add_center_text(d1, (c[0] + 145, c[1] + 150), '...', F_LABEL, GRAY)
-add_text(d1, (c[0] + 28, c[1] + 198), 'seed1', F_SMALL, BLACK)
-add_text(d1, (c[0] + 192, c[1] + 198), 'seed8', F_SMALL, BLACK)
-add_text(d1, (c[0] + 24, c[1] + 262), 'candidate seed1 ... seed8', F_TEXT, BLACK)
-add_text(d1, (c[0] + 24, c[1] + 294), 'same pool before reranking', F_SMALL, GRAY)
+# panel (c)
+text(d1, (c[0] + 28, c[1] + 24), '(c) Generate candidates', F_PANEL)
+text(d1, (c[0] + 40, c[1] + 86), 'Frozen MatrixGame-2', F_HEAD)
+fig1.paste(thumb1, (c[0] + 52, c[1] + 156))
+d1.rectangle((c[0] + 52, c[1] + 156, c[0] + 192, c[1] + 246), outline=BORDER, width=1)
+centered(d1, (c[0] + 262, c[1] + 202), '...', F_HEAD, GRAY)
+fig1.paste(thumb8, (c[0] + 332, c[1] + 156))
+d1.rectangle((c[0] + 332, c[1] + 156, c[0] + 472, c[1] + 246), outline=BORDER, width=1)
+text(d1, (c[0] + 58, c[1] + 258), 'candidate_seed1', F_TINY)
+text(d1, (c[0] + 336, c[1] + 258), 'candidate_seed8', F_TINY)
+text(d1, (c[0] + 52, c[1] + 318), 'same candidate pool before reranking', F_SMALL, GRAY)
 
-# (d) Patch matching.
-d = panels['d']
-add_text(d1, (d[0] + 16, d[1] + 12), '(d) Memory read by patch matching', F_PANEL, BLACK)
-fig1.paste(frame, (d[0] + 18, d[1] + 70))
-g = ImageDraw.Draw(fig1)
-fx, fy = d[0] + 18, d[1] + 70
+# panel (d)
+text(d1, (d[0] + 28, d[1] + 24), '(d) Read by patch matching', F_PANEL)
+fig1.paste(frame, (d[0] + 40, d[1] + 82))
+d1.rectangle((d[0] + 40, d[1] + 82, d[0] + 560, d[1] + 322), outline=BORDER, width=1)
+fx, fy = d[0] + 40, d[1] + 82
 for i in range(1, cols):
-    x = fx + int(i * fw / cols)
-    g.line((x, fy, x, fy + fh), fill=(255, 255, 255), width=2)
+    xx = fx + int(i * fw / cols)
+    d1.line((xx, fy, xx, fy + fh), fill=(255, 255, 255), width=2)
 for j in range(1, rows):
-    y = fy + int(j * fh / rows)
-    g.line((fx, y, fx + fw, y), fill=(255, 255, 255), width=2)
+    yy = fy + int(j * fh / rows)
+    d1.line((fx, yy, fx + fw, yy), fill=(255, 255, 255), width=2)
 hx1, hy1 = fx + px1, fy + py1
 hx2, hy2 = fx + px2, fy + py2
-g.rectangle((hx1, hy1, hx2, hy2), outline=RESULT, width=4)
-add_text(d1, (d[0] + 18, d[1] + 372), 'Regular grid patches', F_SMALL, BLACK)
-add_text(d1, (d[0] + 260, d[1] + 372), 'Feature encoder', F_SMALL, BLACK)
-add_text(d1, (d[0] + 18, d[1] + 404), 'Cosine similarity', F_SMALL, BLACK)
-add_text(d1, (d[0] + 260, d[1] + 404), 'best local patch', F_SMALL, BLACK)
+d1.rectangle((hx1, hy1, hx2, hy2), outline=SEL, width=4)
+fig1.paste(best_patch, (d[0] + 620, d[1] + 132))
+d1.rectangle((d[0] + 620, d[1] + 132, d[0] + 820, d[1] + 262), outline=SEL, width=3)
+text(d1, (d[0] + 628, d[1] + 274), 'best local patch', F_SMALL, SEL)
+for x0, label in zip([d[0] + 48, d[0] + 250, d[0] + 452, d[0] + 654], ['Regular grid patches', 'Feature encoder', 'Cosine similarity', 'Best local patch']):
+    rounded(d1, (x0, d[1] + 336, x0 + 164, d[1] + 390), outline=BORDER, fill=LIGHT, width=1, radius=14)
+    centered(d1, (x0 + 82, d[1] + 363), label, F_TINY)
 
-# (e) Reranking result.
-e = panels['e']
-add_text(d1, (e[0] + 16, e[1] + 12), '(e) Candidate reranking', F_PANEL, BLACK)
-mini1 = fit(seed1, (118, 78))
-mini8 = fit(seed8, (118, 78))
-fig1.paste(mini1, (e[0] + 22, e[1] + 78))
-d1.rectangle((e[0] + 22, e[1] + 78, e[0] + 140, e[1] + 156), outline=BORDER, width=1)
-fig1.paste(mini8, (e[0] + 22, e[1] + 232))
-d1.rectangle((e[0] + 22, e[1] + 232, e[0] + 140, e[1] + 310), outline=RESULT, width=3)
-arrow(d1, (e[0] + 204, e[1] + 128), (e[0] + 204, e[1] + 282), color=RESULT)
-add_text(d1, (e[0] + 168, e[1] + 82), 'No memory:', F_TEXT, BLACK)
-add_text(d1, (e[0] + 168, e[1] + 108), 'seed1', F_TEXT, BLACK)
-add_text(d1, (e[0] + 168, e[1] + 236), 'With memory:', F_TEXT, BLACK)
-add_text(d1, (e[0] + 168, e[1] + 262), 'seed8', F_TEXT, BLACK)
-add_text(d1, (e[0] + 24, e[1] + 344), 'seed1 -> seed8', F_LABEL, RESULT)
-add_text(d1, (e[0] + 24, e[1] + 376), 'selected output changes', F_SMALL, GRAY)
+# panel (e)
+text(d1, (e[0] + 28, e[1] + 24), '(e) Rerank candidates', F_PANEL)
+fig1.paste(thumb1, (e[0] + 58, e[1] + 104))
+d1.rectangle((e[0] + 58, e[1] + 104, e[0] + 198, e[1] + 194), outline=BORDER, width=1)
+text(d1, (e[0] + 250, e[1] + 124), 'No memory: seed1', F_TEXT)
+fig1.paste(thumb8, (e[0] + 58, e[1] + 244))
+d1.rectangle((e[0] + 58, e[1] + 244, e[0] + 198, e[1] + 334), outline=SEL, width=3)
+text(d1, (e[0] + 250, e[1] + 264), 'With memory: seed8', F_TEXT)
+arrow(d1, (e[0] + 520, e[1] + 154), (e[0] + 520, e[1] + 294), color=SEL, width=4)
+text(d1, (e[0] + 58, e[1] + 420), 'selected output changes', F_SMALL, GRAY)
+text(d1, (e[0] + 58, e[1] + 386), 'seed1 -> seed8', F_HEAD, SEL)
 
-# Notes.
-rounded(d1, (80, 560, 840, 612), outline=BORDER, fill=LIGHT, width=1, radius=12)
-add_text(d1, (100, 578), 'No object segmentation. Patches are regular grid cells.', F_TEXT, BLACK)
-rounded(d1, (940, 560, 1710, 612), outline=BORDER, fill=LIGHT, width=1, radius=12)
-add_text(d1, (960, 578), 'ResNet / DINO / CLIP are feature extractors.', F_TEXT, BLACK)
 save_outputs(fig1, 'fig1_method_overview')
 
-# Figure 2: patch-matching evidence.
-W2, H2 = 1100, 940
+# Figure 2: simplified single-column evidence figure.
+W2, H2 = 900, 760
 fig2 = Image.new('RGB', (W2, H2), 'white')
 d2 = ImageDraw.Draw(fig2)
-pan2 = {
-    'a': (40, 40, 320, 290),
-    'b': (360, 40, 1060, 410),
-    'c': (40, 340, 540, 750),
-    'd': (580, 490, 1060, 850),
-}
-for key in pan2:
-    rounded(d2, pan2[key])
+pa = (40, 40, 860, 205)
+pb = (40, 255, 860, 485)
+pc = (40, 535, 860, 720)
+for panel in [pa, pb, pc]:
+    rounded(d2, panel, radius=20)
+arrow(d2, ((pa[0] + pa[2]) // 2, pa[3] + 10), ((pb[0] + pb[2]) // 2, pb[1] - 12), width=4)
+arrow(d2, ((pb[0] + pb[2]) // 2, pb[3] + 10), ((pc[0] + pc[2]) // 2, pc[1] - 12), width=4)
 
-# (a) memory crop
-pa = pan2['a']
-add_text(d2, (pa[0] + 16, pa[1] + 12), '(a) Memory crop', F_PANEL, BLACK)
-mc = fit(memory_crop, (220, 150))
-fig2.paste(mc, (pa[0] + 28, pa[1] + 72))
-d2.rectangle((pa[0] + 28, pa[1] + 72, pa[0] + 248, pa[1] + 222), outline=MEM, width=3)
-add_text(d2, (pa[0] + 28, pa[1] + 226), 'stored local visual cue', F_TEXT, GRAY)
+# panel a
+text(d2, (pa[0] + 28, pa[1] + 22), '(a) Memory crop', F_PANEL)
+fig2.paste(memory_crop, (pa[0] + 320, pa[1] + 42))
+d2.rectangle((pa[0] + 320, pa[1] + 42, pa[0] + 540, pa[1] + 182), outline=MEM, width=3)
 
-# (b) candidate frame with grid
-pb = pan2['b']
-add_text(d2, (pb[0] + 16, pb[1] + 12), '(b) Candidate frame', F_PANEL, BLACK)
-frame_big = fit(seed8, (650, 250))
-fig2.paste(frame_big, (pb[0] + 24, pb[1] + 72))
-d2.rectangle((pb[0] + 24, pb[1] + 72, pb[0] + 674, pb[1] + 322), outline=BORDER, width=1)
-fw2, fh2 = frame_big.size
-fx2, fy2 = pb[0] + 24, pb[1] + 72
+# panel b
+text(d2, (pb[0] + 28, pb[1] + 22), '(b) Candidate frame with regular grid', F_PANEL)
+frame_big = fit(seed8, (700, 150))
+fig2.paste(frame_big, (pb[0] + 60, pb[1] + 56))
+d2.rectangle((pb[0] + 60, pb[1] + 56, pb[0] + 760, pb[1] + 206), outline=BORDER, width=1)
+fwb, fhb = frame_big.size
+fxb, fyb = pb[0] + 60, pb[1] + 56
 for i in range(1, cols):
-    x = fx2 + int(i * fw2 / cols)
-    d2.line((x, fy2, x, fy2 + fh2), fill=(255, 255, 255), width=2)
+    xx = fxb + int(i * fwb / cols)
+    d2.line((xx, fyb, xx, fyb + fhb), fill=(255, 255, 255), width=2)
 for j in range(1, rows):
-    y = fy2 + int(j * fh2 / rows)
-    d2.line((fx2, y, fx2 + fw2, y), fill=(255, 255, 255), width=2)
-qx1 = fx2 + int(cell[0] * fw2 / cols)
-qy1 = fy2 + int(cell[1] * fh2 / rows)
-qx2 = fx2 + int((cell[0] + 1) * fw2 / cols)
-qy2 = fy2 + int((cell[1] + 1) * fh2 / rows)
-d2.rectangle((qx1, qy1, qx2, qy2), outline=RESULT, width=5)
-add_text(d2, (pb[0] + 24, pb[1] + 336), 'Regular grid patches', F_TEXT, BLACK)
-add_text(d2, (pb[0] + 454, pb[1] + 336), 'Best-matching patch', F_TEXT, RESULT)
+    yy = fyb + int(j * fhb / rows)
+    d2.line((fxb, yy, fxb + fwb, yy), fill=(255, 255, 255), width=2)
+hbx1 = fxb + int(cell[0] * fwb / cols)
+hby1 = fyb + int(cell[1] * fhb / rows)
+hbx2 = fxb + int((cell[0] + 1) * fwb / cols)
+hby2 = fyb + int((cell[1] + 1) * fhb / rows)
+d2.rectangle((hbx1, hby1, hbx2, hby2), outline=SEL, width=4)
+text(d2, (pb[0] + 60, pb[1] + 214), 'Regular grid patches', F_SMALL)
 
-# (c) patch similarity
-pc = pan2['c']
-add_text(d2, (pc[0] + 16, pc[1] + 12), '(c) Patch similarity', F_PANEL, BLACK)
-fig2.paste(mc, (pc[0] + 26, pc[1] + 76))
-d2.rectangle((pc[0] + 26, pc[1] + 76, pc[0] + 206, pc[1] + 196), outline=MEM, width=3)
-fig2.paste(best_patch, (pc[0] + 286, pc[1] + 76))
-d2.rectangle((pc[0] + 286, pc[1] + 76, pc[0] + 466, pc[1] + 196), outline=RESULT, width=3)
-arrow(d2, (pc[0] + 214, pc[1] + 136), (pc[0] + 276, pc[1] + 136), color=GRAY)
-add_text(d2, (pc[0] + 52, pc[1] + 212), 'Memory crop', F_SMALL, BLACK)
-add_text(d2, (pc[0] + 318, pc[1] + 212), 'Best-matching patch', F_SMALL, BLACK)
-rounded(d2, (pc[0] + 30, pc[1] + 248, pc[0] + 470, pc[1] + 330), outline=BORDER, fill=LIGHT, width=1, radius=12)
-add_center_text(d2, ((pc[0] + 250), pc[1] + 289), 's_{j,t,k} = cos(f(m), f(p_{j,t,k}))', F_FORMULA, BLACK)
-add_text(d2, (pc[0] + 30, pc[1] + 354), 'No object segmentation:', F_TEXT, GRAY)
-add_text(d2, (pc[0] + 30, pc[1] + 380), 'one grid cell is selected as the best local match.', F_TEXT, GRAY)
+# panel c
+text(d2, (pc[0] + 28, pc[1] + 22), '(c) Best-matching patch', F_PANEL)
+fig2.paste(best_patch, (pc[0] + 72, pc[1] + 36))
+d2.rectangle((pc[0] + 72, pc[1] + 36, pc[0] + 272, pc[1] + 166), outline=SEL, width=3)
+rounded(d2, (pc[0] + 370, pc[1] + 54, pc[0] + 760, pc[1] + 106), outline=BORDER, fill=LIGHT, width=1, radius=14)
+centered(d2, ((pc[0] + 565), pc[1] + 80), 'Feature encoder', F_SMALL)
+rounded(d2, (pc[0] + 370, pc[1] + 122, pc[0] + 760, pc[1] + 174), outline=BORDER, fill=LIGHT, width=1, radius=14)
+centered(d2, ((pc[0] + 565), pc[1] + 148), 'Cosine similarity', F_SMALL)
+arrow(d2, (pc[0] + 286, pc[1] + 100), (pc[0] + 352, pc[1] + 100), color=ARROW, width=4)
+text(d2, (pc[0] + 72, pc[1] + 182), 'Best-matching patch', F_SMALL, SEL)
 
-# (d) seed comparison
-pd = pan2['d']
-add_text(d2, (pd[0] + 16, pd[1] + 12), '(d) Candidate comparison', F_PANEL, BLACK)
-small1 = fit(seed1, (190, 120))
-small8 = fit(seed8, (190, 120))
-fig2.paste(small1, (pd[0] + 26, pd[1] + 72))
-d2.rectangle((pd[0] + 26, pd[1] + 72, pd[0] + 216, pd[1] + 192), outline=BORDER, width=1)
-fig2.paste(small8, (pd[0] + 264, pd[1] + 72))
-d2.rectangle((pd[0] + 264, pd[1] + 72, pd[0] + 454, pd[1] + 192), outline=RESULT, width=3)
-add_text(d2, (pd[0] + 34, pd[1] + 208), 'No-memory: seed1', F_TEXT, BLACK)
-add_text(d2, (pd[0] + 272, pd[1] + 208), 'Memory-guided: seed8', F_TEXT, BLACK)
-arrow(d2, (pd[0] + 220, pd[1] + 132), (pd[0] + 252, pd[1] + 132), color=RESULT)
-add_text(d2, (pd[0] + 26, pd[1] + 266), 'Patch evidence contributes to reranking', F_SMALL, GRAY)
 save_outputs(fig2, 'fig2_patch_matching_evidence')
-
 print('Created paper-style figures in', FIGDIR)
